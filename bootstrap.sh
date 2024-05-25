@@ -20,4 +20,32 @@ else
 fi
 
 # Confirm resetting the database
-read -p "This action will reset
+read -p "This action will reset the database CS348. Are you sure? [y/n]: " confirm
+confirm=${confirm,,}  # tolower
+if [[ "$confirm" != "y" && "$confirm" != "" ]]; then
+    echo "Aborted!"
+    exit 1
+fi
+
+# Export password as an environment variable
+export MYSQL_PWD="$password"
+
+# Run the SQL script from bootstrap.sql
+mysql -u "$username" <<EOF
+$(cat bootstrap.sql)
+EOF
+
+# Check if the command was successful
+if [ $? -eq 0 ]; then
+    echo "Database CS348 has been reset successfully."
+else
+    echo "Failed to reset the database CS348."
+    unset MYSQL_PWD
+    exit 1
+fi
+
+# View tables in the database
+mysql -u"$username" -e "USE CS348; SHOW TABLES;"
+
+# Unset the password environment variable
+unset MYSQL_PWD
