@@ -20,7 +20,7 @@ else
 fi
 
 # Confirm resetting the database
-read -p "This action will reset the database CS348. Are you sure? [y/n]: " confirm
+read -p "This action will reset the database CS348_TEST. Are you sure? [y/n]: " confirm
 confirm=${confirm,,}  # tolower
 if [[ "$confirm" != "y" && "$confirm" != "" ]]; then
     echo "Aborted!"
@@ -37,9 +37,9 @@ EOF
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then
-    echo "Database CS348 has been reset successfully."
+    echo "Database CS348_TEST has been reset successfully."
 else
-    echo "Failed to reset the database CS348."
+    echo "Failed to reset the database CS348_TEST."
     unset MYSQL_PWD
     exit 1
 fi
