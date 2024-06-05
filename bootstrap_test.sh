@@ -32,7 +32,7 @@ export MYSQL_PWD="$password"
 
 # Run the SQL script from bootstrap.sql
 mysql -u "$username" <<EOF
-$(cat bootstrap.sql)
+$(cat bootstrap_test.sql)
 EOF
 
 # Check if the command was successful
