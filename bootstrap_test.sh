@@ -45,7 +45,7 @@ else
 fi
 
 # View tables in the database
-mysql -u"$username" -e "USE CS348; SHOW TABLES;"
+mysql -u"$username" -e "USE CS348_TEST; SHOW TABLES;"
 
 # Unset the password environment variable
 unset MYSQL_PWD
