@@ -94,4 +94,4 @@ INSERT INTO Singer (SingerID, Name, Age, SongProduced, Country) VALUES (1, 'Teac
 INSERT INTO Song (SongID, SingerID, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
     (1, 1, '2021-01-01', 'Pop', 0, 100, 50, 'spotify.com', 'youtube.com', 1);
 
-SELECT Liked FROM Song WHERE SongID = 1 LIMIT 1;
+SELECT (Liked + Disliked) AS TotalLikes FROM Song WHERE SongID = 1;
