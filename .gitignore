@@ -1,2 +1,3 @@
 bootstrap_test.sh
 backend-env
+backend/__pycache__/
