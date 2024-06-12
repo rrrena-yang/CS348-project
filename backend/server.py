@@ -1,11 +1,16 @@
 from SQLService import get_connector
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 app = Flask(__name__)
 
 cursor = get_connector()
 
-# Example route for a simple GET request
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+
 @app.route('/api/hello', methods=['GET'])
 def hello():
     return jsonify(message="Hello, World!")
