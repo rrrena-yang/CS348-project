@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Hardcoded username and password (leave empty for prompting)
-HARDCODED_USERNAME=""
-HARDCODED_PASSWORD=""
+HARDCODED_USERNAME="root"
+HARDCODED_PASSWORD="MySQL030927"
 
 # Prompt for MySQL username if not hardcoded
 if [ -z "$HARDCODED_USERNAME" ]; then

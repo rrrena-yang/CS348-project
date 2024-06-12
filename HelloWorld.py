@@ -1,10 +1,10 @@
 import mysql.connector
 
 config = {
-    'user': "",
-    'password': '',
+    'user': "root",
+    'password': 'MySQL030927',
     'host': 'localhost',
-    'database': 'CS348'
+    'database': 'CS348_TEST'
 }
 
 conn = mysql.connector.connect(**config)

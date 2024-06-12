@@ -10,6 +10,7 @@ USE CS348_TEST;
 -- Create the HelloWorld table with one column Hello
 CREATE TABLE User (
     ID INT PRIMARY KEY,
+    UserPassword VARCHAR(40) NOT NULL,
     UserName VARCHAR(30) NOT NULL,
     Name VARCHAR(30),
     BirthYear INT,
