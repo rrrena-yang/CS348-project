@@ -17,5 +17,5 @@ def get_connector():
     rows = cursor.fetchall()
     for row in rows:
         print(row[0])
-    return cursor
+    return conn
 
