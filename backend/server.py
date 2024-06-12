@@ -3,27 +3,27 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-cursor = get_connector()
+conn = get_connector()
 
 # Example route for a simple GET request
 @app.route('/api/hello', methods=['GET'])
 def hello():
     return jsonify(message="Hello, World!")
 
-@app.route('/api/popularity/{song_id}', methods=['GET'])
-def get_song_popularity():
-    song_id = request.args.get('song_id')
+@app.route('/api/popularity/<int:song_id>', methods=['GET'])
+def get_song_popularity(song_id):
     if not song_id:
         raise Exception("No song_id provided")
-    
-    query = f"SELECT (Liked + Disliked) AS TotalLikes FROM Song WHERE SongID = %{song_id}"
+    print(song_id)
+    query = f"SELECT (Liked + Disliked) AS TotalLikes FROM Song WHERE SongID = {song_id};"
+    cursor = conn.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()
     if len(rows) == 0:
         raise Exception(f"No song with song_id {song_id}")
     
     song = rows[0]
-    return jsonify({"popularity": song[0] + song[1]})
+    return jsonify({"popularity": song[0]})
 
 # Example route for a POST request
 @app.route('/api/data', methods=['POST'])
