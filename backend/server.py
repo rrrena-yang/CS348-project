@@ -16,7 +16,7 @@ def get_song_popularity():
     if not song_id:
         raise Exception("No song_id provided")
     
-    query = f"SELECT Liked, Disliked FROM Song WHERE song_id = %{song_id} LIMIT 1"
+    query = f"SELECT (Liked + Disliked) AS TotalLikes FROM Song WHERE SongID = %{song_id}"
     cursor.execute(query)
     rows = cursor.fetchall()
     if len(rows) == 0:
