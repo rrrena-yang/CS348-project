@@ -16,21 +16,14 @@ def get_song_popularity():
     if not song_id:
         raise Exception("No song_id provided")
     
-    query = f"SELECT * FROM Song WHERE song_id = %{song_id} LIMIT 1"
+    query = f"SELECT Liked, Disliked FROM Song WHERE song_id = %{song_id} LIMIT 1"
     cursor.execute(query)
     rows = cursor.fetchall()
     if len(rows) == 0:
         raise Exception(f"No song with song_id {song_id}")
     
     song = rows[0]
-    return jsonify(song[5] + song[6])
-
-
-
-
-
-
-    return jsonify(message="Hello, World!")
+    return jsonify({"popularity": song[0] + song[1]})
 
 # Example route for a POST request
 @app.route('/api/data', methods=['POST'])
