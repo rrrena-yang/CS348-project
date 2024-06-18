@@ -52,10 +52,31 @@ CREATE TABLE UserReviewOnSong (
     SongID INT,
     IsLike BOOLEAN,
     Review TEXT,
-    PRIMARY KEY (Timestamp, UserID, SongID),
+    PRIMARY KEY (UserID, SongID),
     FOREIGN KEY (UserID) REFERENCES User(ID),
     FOREIGN KEY (SongID) REFERENCES Song(SongID)
 );
+
+DELIMITER //
+
+CREATE TRIGGER UpdateSongLikeness 
+AFTER INSERT ON UserReviewOnSong
+FOR EACH ROW
+BEGIN 
+    IF (NEW.IsLike = TRUE) THEN
+        UPDATE Song
+        SET Liked = Liked + 1
+        WHERE SongID = NEW.SongID;
+    ELSE
+        UPDATE Song
+        SET Disliked = Disliked + 1
+        WHERE SongID = NEW.SongID;
+    END IF;
+END;
+
+//
+
+DELIMITER ;
 
 CREATE TABLE UserReviewOnSinger (
     Timestamp TIMESTAMP,
@@ -63,7 +84,7 @@ CREATE TABLE UserReviewOnSinger (
     SingerID INT,
     IsLike BOOLEAN,
     Review TEXT,
-    PRIMARY KEY (Timestamp, UserID, SingerID),
+    PRIMARY KEY (UserID, SingerID),
     FOREIGN KEY (UserID) REFERENCES User(ID),
     FOREIGN KEY (SingerID) REFERENCES Singer(SingerID)
 );
