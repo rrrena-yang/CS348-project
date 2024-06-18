@@ -1,4 +1,9 @@
 bootstrap_test.sh
 backend-env
+__pycache__/
+bin/
+include/
+lib/
+pyvenv.cfg
 backend/__pycache__/*
 venv/
