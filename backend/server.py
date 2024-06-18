@@ -1,7 +1,7 @@
 from SQLService import get_connector
 from flask import Flask, jsonify, request, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../templates/rock', static_folder='../static')
 
 conn = get_connector()
 
