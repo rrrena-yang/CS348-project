@@ -7,7 +7,12 @@ INSERT INTO HelloWorld (Hello) VALUES ('World');
 -- Test Popularity Queries
 
 INSERT INTO Album (AlbumID, Name) VALUES (1, 'Album1');
-INSERT INTO Singer (SingerID, Name, Age, SongProduced, Country) VALUES (1, 'Teacher G', 30, 10, 'USA');
+
+INSERT INTO Singer (SingerID, Name, Age, SongProduced, Country) VALUES (1, 'Teacher Tou', 30, 10, 'USA');
+INSERT INTO Singer (SingerID, Name, Age, SongProduced, Country) VALUES (2, 'Teacher G', 30, 10, 'USA');
+
+INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
+    (1, 'password', 'username', 'name', 1999);
 
 INSERT INTO Song (SongID, SingerID, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
     (1, 1, '2021-01-01', 'Pop', 0, 100, 50, 'spotify.com', 'youtube.com', 1);
@@ -20,4 +25,11 @@ INSERT INTO Song (SongID, SingerID, PublishDate, Category, TotalReviewAmount, Li
 INSERT INTO Song (SongID, SingerID, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
     (5, 1, '2021-01-03', 'Rock', 0, 300, 150, 'spotify.com', 'youtube.com', 1);
 
-SELECT Category, COUNT(*) AS NumberOfSongs FROM Song WHERE SingerID = 1 GROUP BY Category ORDER BY NumberOfSongs DESC LIMIT 3;
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-01', 1, 1, TRUE, 'Great Teacher Tou very epic');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 1, 1, TRUE, 'Good Teacher G epic');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-03', 1, 2, TRUE, 'Teacher G is good');
+
+SELECT Review FROM UserReviewOnSong WHERE UserID = 1 AND SongID = 1;
