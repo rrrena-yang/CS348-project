@@ -26,6 +26,7 @@ if [[ "$confirm" != "y" && "$confirm" != "" ]]; then
     echo "Aborted!"
     exit 1
 fi
+echo "$confirm"
 
 # Export password as an environment variable
 export MYSQL_PWD="$password"
@@ -39,6 +40,8 @@ EOF
 mysql -u "$username" <<EOF
 $(cat bootstrap_test.sql)
 EOF
+
+echo "here"
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then

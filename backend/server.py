@@ -45,7 +45,7 @@ def search_results():
             "album_id": row[10]
         })
     return render_template('search_results.html', query=query, songs=songs)
-    
+
 
 @app.route('/api/popularity/<int:song_id>', methods=['GET'])
 def get_song_popularity(song_id):
