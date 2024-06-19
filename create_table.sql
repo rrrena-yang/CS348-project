@@ -90,17 +90,6 @@ CREATE TABLE UserReviewOnSinger (
     FOREIGN KEY (SingerID) REFERENCES Singer(SingerID)
 );
 
-CREATE TABLE PokeTable (
-    UserID1 INT,
-    UserID2 INT,
-    SongID INT,
-    Timestamp TIMESTAMP,
-    PRIMARY KEY (UserID1, UserID2, SongID, Timestamp),
-    FOREIGN KEY (UserID1) REFERENCES User(ID),
-    FOREIGN KEY (UserID2) REFERENCES User(ID),
-    FOREIGN KEY (SongID) REFERENCES Song(SongID)
-);
-
 CREATE TABLE HelloWorld (
     Hello VARCHAR(255)
 );
