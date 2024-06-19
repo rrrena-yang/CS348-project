@@ -1,6 +1,6 @@
 name: MySQL CI
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   test:
@@ -36,7 +36,7 @@ jobs:
 
     - name: Run bootstrap_test.sql
       run: |
-        docker exec -i mysql mysql -uroot -pMySQL030927 test_db < bootstrap_test.sql
+        docker exec -i mysql mysql -u root -p MySQL030927 test_db < bootstrap_test.sql
 
     - name: Run sample queries and check outputs
       run: |
