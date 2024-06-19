@@ -1,0 +1,33 @@
+.song-detail-header {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.song-detail-content {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.song-detail-content h2, .song-detail-content h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.song-detail-content p {
+    margin-bottom: 20px;
+}
+
+.song-detail-content .btn {
+    margin-right: 10px;
+}
+
+.list-group-item {
+    border: none;
+    padding: 10px 15px;
+}
+
+.list-group-item strong {
+    display: inline-block;
+    min-width: 150px;
+}

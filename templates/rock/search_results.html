@@ -2,30 +2,45 @@
 <html lang="en">
 
 <head>
-    <!-- Basic Meta Tags -->
+    <!-- basic -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- mobile metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Site Meta Tags -->
-    <title>Search Results</title>
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}?v=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}?v=1">
-    <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}?v=1" type="image/gif" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}?v=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>Rock</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- style css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <!-- fevicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}" type="image/gif" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}">
+    <!-- Tweaks for older IEs-->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 </head>
+<!-- body -->
 
 <body class="main-layout">
-    <!-- Header -->
+    <!-- loader  -->
+    <div class="loader_bg">
+        <div class="loader"><img src="{{ url_for('static', filename='images/loading.gif') }}" alt="#" /></div>
+    </div>
+    <!-- end loader -->
+    <!-- header -->
     <header>
+        <!-- header inner -->
         <div class="header">
             <div class="container">
                 <div class="row">
@@ -33,7 +48,7 @@
                         <div class="full">
                             <div class="center-desk">
                                 <div class="logo">
-                                    <a href="index.html"><img src="{{ url_for('static', filename='images/logo.jpg') }}?v=1" alt="logo" /></a>
+                                    <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="logo" /></a>
                                 </div>
                             </div>
                         </div>
@@ -43,7 +58,7 @@
                             <div class="limit-box">
                                 <nav class="main-menu">
                                     <ul class="menu-area-main">
-                                        <li class="active"> <a href="index.html">Home</a> </li>
+                                        <li class="active"> <a href="{{ url_for('index') }}">Home</a> </li>
                                         <li> <a href="about.html">About</a> </li>
                                         <li> <a href="album.html">Albums</a> </li>
                                         <li> <a href="blog.html">Blog</a> </li>
@@ -55,39 +70,153 @@
                         </div>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-                        <form class="search" id="search-form" method="POST" action="{{ url_for('index') }}">
-                            <input class="form-control" type="text" placeholder="Search" name="query" id="search-input">
-                            <button type="submit"><img src="{{ url_for('static', filename='images/search_icon.png') }}?v=1"></button>
+                        <form class="search" method="POST" action="{{ url_for('index') }}">
+                            <input class="form-control" type="text" placeholder="Search" name="query" required>
+                            <button type="submit"><img src="{{ url_for('static', filename='images/search_icon.png') }}"></button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- end header inner -->
     </header>
-    <!-- Main Content -->
-    <section class="main_content">
+    <!-- end header -->
+
+    <div class="Albumsbg">
         <div class="container">
-            <h3>Search Results for "{{ query }}"</h3>
-            {% if songs %}
-                <ul>
-                {% for song in songs %}
-                    <li>Song ID: {{ song.song_id }} - Name: {{ song.name }}</li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <p>No results found for "{{ query }}".</p>
-            {% endif %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="Albumstitlepage">
+                        <h2>Search Results for "{{ query }}"</h2>
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                        {% else %}
+                            <div class="titlepage">
+                                {% if songs %}
+                                    <div class="row">
+                                        {% for song in songs %}
+                                            <div class="col-md-4">
+                                                <div class="card mb-4 shadow-sm">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">{{ song.name }}</h3>
+                                                        <p class="card-title">Song ID: {{ song.song_id }}</p>
+                                                        <p class="card-text">Singer ID: {{ song.singer_id }}</p>
+                                                        <p class="card-text">Category: {{ song.category }}</p>
+                                                        <a href="{{ url_for('song_detail', song_id=song.song_id) }}" class="btn btn-danger">View Details</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <p>No results found for "{{ query }}".</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
-    <!-- Javascript files -->
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}?v=1"></script>
-    <script src="{{ url_for('static', filename='js/popper.min.js') }}?v=1"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}?v=1"></script>
-    <script src="{{ url_for('static', filename='js/jquery-3.0.0.min.js') }}?v=1"></script>
-    <script src="{{ url_for('static', filename='js/plugin.js') }}?v=1"></script>
-    <script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}?v=1"></script>
-    <script src="{{ url_for('static', filename='js/custom.js') }}?v=1"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    </div>
+
+    <!--  footer -->
+    <footr>
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-12 width">
+                        <div class="address">
+                            <h3>Contact Us</h3>
+                            <ul class="locarion_icon">
+                                <li><img src="{{ url_for('static', filename='icon/1.png') }}" alt="icon" />104 New York , USA</li>
+                                <li><img src="{{ url_for('static', filename='icon/2.png') }}" alt="icon" />Phone : ( +71 5896547 )</li>
+                                <li><img src="{{ url_for('static', filename='icon/3.png') }}" alt="icon" />Email : demo@email.com</li>
+                            </ul>
+
+                            <ul class="contant_icon">
+                                <li><img src="{{ url_for('static', filename='icon/fb.png') }}" alt="icon" /></li>
+                                <li><img src="{{ url_for('static', filename='icon/tw.png') }}" alt="icon" /></li>
+                                <li><img src="{{ url_for('static', filename='icon/lin(2).png') }}" alt="icon" /></li>
+                                <li><img src="{{ url_for('static', filename='icon/instagram.png') }}" alt="icon" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 width">
+                        <div class="address">
+                            <h3>Get In Touch</h3>
+                            <form>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input class="contactus" placeholder="Name" type="text" name="Name">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input class="contactus" placeholder="Phone" type="text" name="Email">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input class="contactus" placeholder="Email" type="text" name="Email">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <textarea class="textarea" placeholder="Message" type="text" name="Message"></textarea>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <button class="send">Send</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 width">
+                        <div class="address">
+                            <h3>New Music </h3>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+                                    <figure><img src="{{ url_for('static', filename='images/music1.jpg') }}" /></figure>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+                                    <figure><img src="{{ url_for('static', filename='images/music2.jpg') }}" /></figure>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+                                    <figure><img src="{{ url_for('static', filename='images/music3.jpg') }}" /></figure>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+                                    <figure><img src="{{ url_for('static', filename='images/music4.jpg') }}" /></figure>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2019 All Rights Reserved. <a href="https://html.design/">Free html Templates</a></p>
+            </div>
+        </div>
+    </footr>
+    <!-- end footer -->
+    <!-- Javascript files-->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.0.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugin.js') }}"></script>
+    <!-- sidebar -->
+    <script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function() {
+                $(this).addClass('transition');
+            }, function() {
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
 </body>
 
 </html>
