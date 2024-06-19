@@ -45,7 +45,7 @@ jobs:
     - name: Copy scripts to MySQL container
       run: |
         docker cp bootstrap_test.sh ${{steps.mysql_container.outputs.id}}:/root/bootstrap_test.sh
-        docker cp create-table.sql ${{steps.mysql_container.outputs.id}}:/root/create-table.sql
+        docker cp create_table.sql ${{steps.mysql_container.outputs.id}}:/root/create_table.sql
         docker cp bootstrap_test.sql ${{steps.mysql_container.outputs.id}}:/root/bootstrap_test.sql
 
     - name: Run bootstrap_test.sh inside MySQL container
