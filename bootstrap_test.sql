@@ -9,8 +9,8 @@ INSERT INTO HelloWorld (Hello) VALUES ('World');
 
 INSERT INTO Album (AlbumID, Name) VALUES (1, 'Album1');
 
-INSERT INTO Singer (SingerID, Name, Age, SongProduced, Country) VALUES (1, 'Teacher Tou', 30, 10, 'USA');
-INSERT INTO Singer (SingerID, Name, Age, SongProduced, Country) VALUES (2, 'Teacher G', 30, 10, 'USA');
+INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (1, 'Teacher Tou', 30, 10, 'USA');
+INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (2, 'Teacher G', 30, 10, 'USA');
 
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (1, 'password', 'username', 'name', 1999);
