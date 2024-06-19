@@ -24,6 +24,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Check MySQL container logs
+    run: docker logs mysql
+
     - name: Wait for MySQL
       run: |
         for i in {30..0}; do
@@ -33,6 +36,10 @@ jobs:
           echo 'MySQL init process in progress...'
           sleep 1
         done
+
+      
+    - name: Check MySQL container logss
+    run: docker logs mysql
 
     - name: Run bootstrap_test.sql
       run: |
