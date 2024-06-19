@@ -19,7 +19,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: MySQL030927
           MYSQL_DATABASE: CS348_TEST
-          MYSQL_LOWER_CASE_TABLE_NAMES: 1
+          MYSQL_CHARSET: utf8mb4
+          MYSQL_COLLATION: utf8mb4_unicode_ci
 
     steps:
     - name: Checkout repository
