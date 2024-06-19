@@ -93,3 +93,7 @@ CREATE TABLE UserReviewOnSinger (
 CREATE TABLE HelloWorld (
     Hello VARCHAR(255)
 );
+
+SHOW DATABASES;
+
+SHOW TABLES;
