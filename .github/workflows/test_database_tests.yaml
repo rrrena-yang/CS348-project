@@ -19,6 +19,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: MySQL030927
           MYSQL_DATABASE: CS348_TEST
+          MYSQL_LOWER_CASE_TABLE_NAMES: 1
 
     steps:
     - name: Checkout repository
