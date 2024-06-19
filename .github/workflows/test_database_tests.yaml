@@ -52,22 +52,13 @@ jobs:
     - name: Run bootstrap_test.sh inside MySQL container
       run: |
         docker exec -i ${{steps.mysql_container.outputs.id}} sh -c 'chmod +x /root/bootstrap_test.sh && /root/bootstrap_test.sh'
-
-    - name: Run sample queries and check outputs
-      run: |
-        echo "MySQL Root Password: $MYSQL_ROOT_PASSWORD"
-
-    - name: Grant privileges to root user
-      run: |
-        docker exec -i ${{steps.mysql_container.outputs.id}} mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'; FLUSH PRIVILEGES;"
-
     
     - name: Run sample queries and check outputs
       run: |
         find sample-query -type f -name '*.sql' | while read -r sql_file; do
           base_name=$(basename "$sql_file" .sql)
           out_file="${sql_file%.sql}.out"
-          output=$(docker exec -i ${{steps.mysql_container.outputs.id}} mysql -uroot -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE" < "$sql_file")
+          output=$(docker exec -i ${{steps.mysql_container.outputs.id}} mysql -uroot -p"MySQL030927" CS348_TEST < "$sql_file")
           echo "$output" > output.txt
           if ! diff -q output.txt "$out_file"; then
             echo "Output mismatch for $sql_file"
