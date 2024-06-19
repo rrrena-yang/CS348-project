@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Site Meta Tags -->
+    <title>Song Statistics</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}" type="image/gif" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <!-- Custom CSS -->
+    <style>
+        .statistics-header {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .statistics-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .statistics-section {
+            padding: 40px 0;
+        }
+        .stat-card {
+            background-color: #911a0a;
+            color: white;
+            text-align: center;
+            border: 1px solid #e3e6f0;
+            border-radius: 10px;
+            padding: 30px 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .stat-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        .stat-card p {
+            font-size: 1.25rem;
+            color: white;
+        }
+        .stat-card.large h1 {
+            font-size: 500 rem;
+            padding: 50px 20px;
+            color: white;
+        }
+        .stat-card.large {
+            background-color: #911a0a;
+            grid-column: span 2;
+            grid-row: span 2;
+            font-size: 50 rem;
+            padding: 50px 20px;
+            color: white;
+        }
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+    </style>
+</head>
+
+<body class="main-layout">
+    <!-- Header -->
+   
+    <!-- Main Content -->
+    <div class="statistics-header">
+        <div class="container">
+            <h2>Song Statistics</h2>
+        </div>
+    </div>
+    <section class="statistics-section">
+        <div class="container">
+            <div class="statistics-grid">
+                <div class="stat-card large">
+                    <h1>POPULARITY</h1>
+                    <h1>{{ popularity }}</h1>
+                </div>
+                <div class="stat-card">
+                    <h3>Liked</h3>
+                    <p>{{ liked }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Disliked</h3>
+                    <p>{{ disliked }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- end footer -->
+    <!-- Javascript files-->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.0.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugin.js') }}"></script>
+    <!-- sidebar -->
+    <script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function() {
+                $(this).addClass('transition');
+            }, function() {
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+</body>
+
+</html>
+
