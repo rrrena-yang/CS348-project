@@ -2,7 +2,6 @@
 USE CS348_TEST;
 
 
-
 -- Insert one row with the value 'World'
 INSERT INTO HelloWorld (Hello) VALUES ('World');
 
@@ -40,4 +39,4 @@ INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-02', 3, 1, FALSE, 'Good Teacher G epic');
 
-SELECT * FROM SONG WHERE SongID = 1;
+SELECT * FROM Song WHERE SongID = 1;
