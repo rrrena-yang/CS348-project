@@ -2,5 +2,5 @@ SongID	SingerID	SongName	PublishDate	Category	TotalReviewAmount	Liked	Disliked	S
 1	1	AAA	2021-01-01	Pop	0	102	51	spotify.com	youtube.com	1
 2	2	AAA	2021-01-02	Pop	0	201	100	spotify.com	youtube.com	1
 3	2	CCC	2021-01-03	Pop	0	300	150	spotify.com	youtube.com	1
-4	2	DDD	2021-01-03	Rock	0	300	150	spotify.com	youtube.com	12
+4	2	DDD	2021-01-03	Rock	0	300	150	spotify.com	youtube.com	1
 5	2	EEE	2021-01-03	Rock	0	300	150	spotify.com	youtube.com	1
