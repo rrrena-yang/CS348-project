@@ -44,7 +44,7 @@ jobs:
 
     - name: Run bootstrap_test.sh inside MySQL container
       run: |
-        docker exec -i ${{steps.mysql_container.outputs.id}} sh -c 'exec /path/to/bootstrap_test.sh'
+        docker exec -i ${{steps.mysql_container.outputs.id}} sh -c 'exec ./bootstrap_test.sh'
 
     - name: Run sample queries and check outputs
       run: |
