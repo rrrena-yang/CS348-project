@@ -1,0 +1,10 @@
+SongID  SongName        Category        AlbumID SingerID
+1       AAA     Pop     1       1
+2       BBB     Pop     1       1
+3       CCC     Pop     2       2
+4       DDD     Rock    1       2
+SongID  SongName        Category        AlbumID SingerID
+3       CCC     Pop     2       2
+4       DDD     Rock    1       2
+5       EEE     Rock    2       3
+6       LOL     Rap     2       3
