@@ -53,15 +53,19 @@ jobs:
       run: |
         docker exec -i ${{steps.mysql_container.outputs.id}} sh -c 'chmod +x /root/bootstrap_test.sh && /root/bootstrap_test.sh'
 
-    - name: Run sample queries and check outputs
-      run: |
-        find sample-query -type f -name '*.sql' | while read -r sql_file; do
-          base_name=$(basename "$sql_file" .sql)
-          out_file="${sql_file%.sql}.out"
-          output=$(docker exec -i ${{steps.mysql_container.outputs.id}} mysql -u root -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE" < "$sql_file")
-          echo "$output" > output.txt
-          if ! diff -q output.txt "$out_file"; then
-            echo "Output mismatch for $sql_file"
-            exit 1
-          fi
-        done
+  - name: Run sample queries and check outputs
+    run: |
+      find sample-query -type f -name '*.sql' | while read -r sql_file; do
+        base_name=$(basename "$sql_file" .sql)
+        out_file="${sql_file%.sql}.out"
+        output=$(docker exec mysql mysql -uroot -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE" < "$sql_file")
+        echo "$output" > output.txt
+        if ! diff -q output.txt "$out_file"; then
+          echo "Output mismatch for $sql_file"
+          echo "===== Expected Output ($out_file) ====="
+          cat "$out_file"
+          echo "===== Actual Output ====="
+          cat output.txt
+          exit 1
+        fi
+      done
