@@ -15,12 +15,26 @@ INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (2,
 INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (3, 'Teacher C', 30, 10, 'USA');
 
 
+
+INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (10, 'Teacher G', 30, 10, 'USA');
+
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (1, 'password', 'username', 'name', 1999);
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (2, 'password', 'username', 'name', 1999);
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (3, 'password', 'username', 'name', 1999);
+
+INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
+    (4, 'password', 'John', 'John', 2001);
+INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
+    (5, 'password', 'Jane', 'Jane', 2002);
+INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
+    (6, 'password', 'hater', 'Hater', 2001);
+INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
+    (7, 'password', 'Joe', 'Joe', 2011);
+INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
+    (8, 'password', 'liker', 'liker', 2001);
 
 INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
     (1, 1, "AAA", '2021-01-01', 'Pop', 0, 100, 50, 'spotify.com', 'youtube.com', 1);
@@ -44,6 +58,17 @@ INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES
     ('2021-01-02', 2, 5, TRUE, 'Good Teacher G epic');
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-02', 3, 1, FALSE, 'Good Teacher G epic');
+
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 4, 1, TRUE, 'Johns review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 5, 1, TRUE, 'Janes review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 6, 1, FALSE, 'Hater review');
+ INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 8, 1, TRUE, 'liker review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 7, 1, TRUE, 'Joes review');
 
 -- View to aggregate user preferences
 CREATE VIEW UserPreferences AS
