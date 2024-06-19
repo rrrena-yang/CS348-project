@@ -55,6 +55,15 @@ jobs:
 
     - name: Run sample queries and check outputs
       run: |
+        echo "MySQL Root Password: $MYSQL_ROOT_PASSWORD"
+
+    - name: Grant privileges to root user
+      run: |
+        docker exec -i ${{steps.mysql_container.outputs.id}} mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'; FLUSH PRIVILEGES;"
+
+    
+    - name: Run sample queries and check outputs
+      run: |
         find sample-query -type f -name '*.sql' | while read -r sql_file; do
           base_name=$(basename "$sql_file" .sql)
           out_file="${sql_file%.sql}.out"
