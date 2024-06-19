@@ -18,7 +18,6 @@ jobs:
           --health-retries=5
         env:
           MYSQL_ROOT_PASSWORD: MySQL030927
-          MYSQL_DATABASE: test_db
 
     steps:
     - name: Checkout repository
