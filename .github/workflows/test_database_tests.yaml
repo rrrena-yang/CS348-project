@@ -42,6 +42,10 @@ jobs:
     - name: Check MySQL container logs
       run: docker logs ${{steps.mysql_container.outputs.id}}
 
+    - name: Run create_table.sql
+      run: |
+        docker exec -i ${{steps.mysql_container.outputs.id}} sh -c 'exec mysql -u root -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE"' < create_table.sql
+
     - name: Run bootstrap_test.sql
       run: |
         docker exec -i ${{steps.mysql_container.outputs.id}} sh -c 'exec mysql -u root -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE"' < bootstrap_test.sql
