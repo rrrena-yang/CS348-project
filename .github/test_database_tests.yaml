@@ -1,0 +1,52 @@
+name: MySQL CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:latest
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+        env:
+          MYSQL_ROOT_PASSWORD: MySQL030927
+          MYSQL_DATABASE: test_db
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Wait for MySQL
+      run: |
+        for i in {30..0}; do
+          if docker exec mysql mysql -uroot -pMySQL030927 -e "SELECT 1;" &> /dev/null; then
+            break
+          fi
+          echo 'MySQL init process in progress...'
+          sleep 1
+        done
+
+    - name: Run bootstrap_test.sql
+      run: |
+        docker exec -i mysql mysql -uroot -pMySQL030927 test_db < bootstrap_test.sql
+
+    - name: Run sample queries and check outputs
+      run: |
+        find sample-query -type f -name '*.sql' | while read -r sql_file; do
+          base_name=$(basename "$sql_file" .sql)
+          out_file="${sql_file%.sql}.out"
+          output=$(docker exec -i mysql mysql -uroot -pMySQL030927 test_db < "$sql_file")
+          echo "$output" > output.txt
+          if ! diff -q output.txt "$out_file"; then
+            echo "Output mismatch for $sql_file"
+            exit 1
+          fi
+        done
