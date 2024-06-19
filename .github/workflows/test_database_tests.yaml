@@ -18,7 +18,7 @@ jobs:
           --health-retries=5
         env:
           MYSQL_ROOT_PASSWORD: MySQL030927
-          MYSQL_DATABASE: test_db
+          MYSQL_DATABASE: CS348_TEST
 
     steps:
     - name: Checkout repository
@@ -42,11 +42,4 @@ jobs:
     - name: Check MySQL container logs
       run: docker logs ${{steps.mysql_container.outputs.id}}
 
-    - name: Run bootstrap_test.sh inside MySQL container
-      run: |
-        docker exec -i ${{steps.mysql_container.outputs.id}} sh -c 'exec ./bootstrap_test.sh'
-
-    - name: Run sample queries and check outputs
-      run: |
-        find sample-query -type f -name '*.sql' | while read -r sql_file; do
-          base_name=$(basename "$sql
+    - name: Copy scripts to MySQL c
