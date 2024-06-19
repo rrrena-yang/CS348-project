@@ -12,12 +12,22 @@ INSERT INTO Album (AlbumID, Name) VALUES (1, 'Album1');
 INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (1, 'Teacher Tou', 30, 10, 'USA');
 INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (2, 'Teacher G', 30, 10, 'USA');
 
+
+INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (10, 'Teacher G', 30, 10, 'USA');
+
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (1, 'password', 'username', 'name', 1999);
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (2, 'password', 'username', 'name', 1999);
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (3, 'password', 'username', 'name', 1999);
+
+INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
+    (4, 'password', 'John', 'John', 2001);
+INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
+    (5, 'password', 'Jane', 'Jane', 2002);
+INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
+    (7, 'password', 'Joe', 'Joe', 2011);
 
 INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
     (1, 1, "AAA", '2021-01-01', 'Pop', 0, 100, 50, 'spotify.com', 'youtube.com', 1);
@@ -38,5 +48,12 @@ INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES
     ('2021-01-02', 2, 1, TRUE, 'Good Teacher G epic');
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-02', 3, 1, FALSE, 'Good Teacher G epic');
+
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 4, 1, TRUE, 'Johns review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 5, 1, FALSE, 'Janes review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 7, 1, TRUE, 'Joes review');
 
 SELECT * FROM Song WHERE SongID = 1;
