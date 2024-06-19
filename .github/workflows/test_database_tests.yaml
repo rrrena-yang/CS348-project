@@ -25,7 +25,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Check MySQL container logs
-    run: docker logs mysql
+      run: docker logs mysql
 
     - name: Wait for MySQL
       run: |
@@ -39,7 +39,7 @@ jobs:
 
       
     - name: Check MySQL container logss
-    run: docker logs mysql
+      run: docker logs mysql
 
     - name: Run bootstrap_test.sql
       run: |
