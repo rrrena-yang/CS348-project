@@ -33,6 +33,7 @@ CREATE TABLE Singer (
 
 CREATE TABLE Song (
     SongID INT PRIMARY KEY,
+    SongName VARCHAR(50),
     SingerID INT,
     PublishDate DATE,
     Category VARCHAR(50),
