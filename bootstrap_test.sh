@@ -41,7 +41,6 @@ mysql -u "$username" <<EOF
 $(cat bootstrap_test.sql)
 EOF
 
-echo "here"
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then
