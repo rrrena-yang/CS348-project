@@ -24,7 +24,7 @@ def search_results():
     print(f"Search results for query: {query}")  # Debug print
     if not query:
         return render_template('search_results.html', error="Please enter a search query.")
-    search_query = f"SELECT SongID, SingerID, SongName, Category FROM Song WHERE SongID Like %s "
+    search_query = f"SELECT SongID, SingerID, SongName, Category FROM Song WHERE SongName Like %s "
     cursor = conn.cursor()
     cursor.execute(search_query, (f"%{query}%",))
     results = cursor.fetchall()
