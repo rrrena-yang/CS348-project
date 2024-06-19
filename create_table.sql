@@ -26,7 +26,7 @@ CREATE TABLE Album (
 CREATE TABLE Singer (
     SingerID INT PRIMARY KEY,
     Name VARCHAR(50),
-    Age INT,
+    BirthYear INT,
     SongProduced INT,
     Country VARCHAR(50)
 );
@@ -93,3 +93,7 @@ CREATE TABLE UserReviewOnSinger (
 CREATE TABLE HelloWorld (
     Hello VARCHAR(255)
 );
+
+SHOW DATABASES;
+
+SHOW TABLES;

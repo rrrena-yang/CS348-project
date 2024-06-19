@@ -2,7 +2,6 @@
 USE CS348_TEST;
 
 
-
 -- Insert one row with the value 'World'
 INSERT INTO HelloWorld (Hello) VALUES ('World');
 
@@ -11,10 +10,15 @@ INSERT INTO HelloWorld (Hello) VALUES ('World');
 INSERT INTO Album (AlbumID, Name) VALUES (1, 'Album1');
 INSERT INTO Album (AlbumID, Name) VALUES (2, 'Album2');
 
+<<<<<<< HEAD
 INSERT INTO Singer (SingerID, Name, Age, SongProduced, Country) VALUES (1, 'Teacher To', 30, 10, 'USA');
 INSERT INTO Singer (SingerID, Name, Age, SongProduced, Country) VALUES (2, 'Teacher G', 30, 10, 'USA');
 INSERT INTO Singer (SingerID, Name, Age, SongProduced, Country) VALUES (3, 'Teacher C', 30, 10, 'USA');
 
+=======
+INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (1, 'Teacher Tou', 30, 10, 'USA');
+INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (2, 'Teacher G', 30, 10, 'USA');
+>>>>>>> 5764398199a08c68e76e25132f74ef05fd21e5c3
 
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (1, 'password', 'username', 'name', 1999);
@@ -26,11 +30,11 @@ INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES
 INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
     (1, 1, "AAA", '2021-01-01', 'Pop', 0, 100, 50, 'spotify.com', 'youtube.com', 1);
 INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
-    (2, 2, "BBB", '2021-01-02', 'Pop', 0, 200, 100, 'spotify.com', 'youtube.com', 1);
+    (2, 2, "AAA", '2021-01-02', 'Pop', 0, 200, 100, 'spotify.com', 'youtube.com', 1);
 INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
     (3, 2, "CCC", '2021-01-03', 'Pop', 0, 300, 150, 'spotify.com', 'youtube.com', 2);
 INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
-    (4, 2, "DDD",'2021-01-03', 'Rock', 0, 300, 150, 'spotify.com', 'youtube.com', 1);
+    (4, 2, "DDD", '2021-01-03', 'Rock', 0, 300, 150, 'spotify.com', 'youtube.com', 1);
 INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
     (5, 3, "EEE",'2021-01-03', 'Rock', 0, 300, 150, 'spotify.com', 'youtube.com', 2);
 INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
@@ -129,3 +133,4 @@ LIMIT 10;
 -- LIMIT 10;
 
 
+SELECT * FROM Song WHERE SongID = 1;

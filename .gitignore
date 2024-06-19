@@ -7,3 +7,5 @@ lib/
 pyvenv.cfg
 backend/__pycache__/*
 venv/
+output.txt
+
