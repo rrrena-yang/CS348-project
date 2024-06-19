@@ -1,15 +1,15 @@
+import os
 from SQLService import get_connector
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, send_from_directory
 
-app = Flask(__name__, template_folder='../templates/rock', static_folder='../static')
+app = Flask(__name__, static_folder='../frontend/build/static', template_folder='../frontend/build')
 
 conn = get_connector()
 
-@app.route('/')
-def index():
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def index(path):
     return render_template('index.html')
-
-
 
 @app.route('/api/hello', methods=['GET'])
 def hello():
