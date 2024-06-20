@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Site Meta Tags -->
+    <title>Song Details - {{ song.name }}</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/song.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}" type="image/gif" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="main-layout">
+    <!-- Header -->
+    <header>
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col logo_section">
+                        <div class="full">
+                            <div class="center-desk">
+                                <div class="logo">
+                                    <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="logo" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10">
+                        <div class="menu-area">
+                            <div class="limit-box">
+                                <nav class="main-menu">
+                                    <ul class="menu-area-main">
+                                        <li> <a href="{{ url_for('index') }}">Home</a> </li>
+                                        <li> <a href="about.html">About</a> </li>
+                                        <li> <a href="album.html">Albums</a> </li>
+                                        <li> <a href="blog.html">Blog</a> </li>
+                                        <li> <a href="contact.html">Contact</a> </li>
+                                        <li> <a href="#contact">Login</a> </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                        <form class="search" method="POST" action="{{ url_for('index') }}">
+                            <input class="form-control" type="text" placeholder="Search" name="query" required>
+                            <button type="submit"><img src="{{ url_for('static', filename='images/search_icon.png') }}"></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <section class="main_content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="song-detail-header text-center">
+                        <h1>{{ song.name }}</h1>
+                        <p class="lead">by Singer ID: {{ song.singer_id }}</p>
+                        <p>Category: {{ song.category }} | Published on: {{ song.publish_date }}</p>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-md-8 offset-md-2">
+                    <div class="song-detail-content">
+                        <h2>Overview</h2>
+                        <p>{{ song.description }}</p>
+                        <a href="{{ url_for('song_data', song_id = song.song_id, liked = song.liked, disliked = song.disliked, total_review_amount = song.total_review_amount) }}" class="btn btn-danger">Check for popularity</a>
+                        <h3>Total Reviews:</h3> 
+                        <ul class="list-group">
+                            <li class="list-group-item">{{ song.total_review_amount }}</li>
+                        </ul>
+                        <h3>Listen to the Song</h3>
+                        <p>Enjoy the full song on your favorite platforms:</p>
+                        <a href="{{ song.spotify_link }}" class="btn btn-success" target="_blank">Listen on Spotify</a>
+                        <a href="{{ song.yt_link }}" class="btn btn-danger" target="_blank">Watch on YouTube</a>
+                        <hr>
+                        <h3>Album Details</h3>
+                        <p>Album ID: {{ song.album_id }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Javascript files -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.0.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugin.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+</body>
+
+</html>

@@ -26,7 +26,7 @@ CREATE TABLE Album (
 CREATE TABLE Singer (
     SingerID INT PRIMARY KEY,
     Name VARCHAR(50),
-    Age INT,
+    BirthYear INT,
     SongProduced INT,
     Country VARCHAR(50)
 );
@@ -34,6 +34,7 @@ CREATE TABLE Singer (
 CREATE TABLE Song (
     SongID INT PRIMARY KEY,
     SingerID INT,
+    SongName VARCHAR(50),
     PublishDate DATE,
     Category VARCHAR(50),
     TotalReviewAmount INT,
@@ -52,10 +53,31 @@ CREATE TABLE UserReviewOnSong (
     SongID INT,
     IsLike BOOLEAN,
     Review TEXT,
-    PRIMARY KEY (Timestamp, UserID, SongID),
+    PRIMARY KEY (UserID, SongID),
     FOREIGN KEY (UserID) REFERENCES User(ID),
     FOREIGN KEY (SongID) REFERENCES Song(SongID)
 );
+
+DELIMITER //
+
+CREATE TRIGGER UpdateSongLikeness 
+AFTER INSERT ON UserReviewOnSong
+FOR EACH ROW
+BEGIN 
+    IF (NEW.IsLike = TRUE) THEN
+        UPDATE Song
+        SET Liked = Liked + 1
+        WHERE SongID = NEW.SongID;
+    ELSE
+        UPDATE Song
+        SET Disliked = Disliked + 1
+        WHERE SongID = NEW.SongID;
+    END IF;
+END;
+
+//
+
+DELIMITER ;
 
 CREATE TABLE UserReviewOnSinger (
     Timestamp TIMESTAMP,
@@ -63,22 +85,15 @@ CREATE TABLE UserReviewOnSinger (
     SingerID INT,
     IsLike BOOLEAN,
     Review TEXT,
-    PRIMARY KEY (Timestamp, UserID, SingerID),
+    PRIMARY KEY (UserID, SingerID),
     FOREIGN KEY (UserID) REFERENCES User(ID),
     FOREIGN KEY (SingerID) REFERENCES Singer(SingerID)
-);
-
-CREATE TABLE PokeTable (
-    UserID1 INT,
-    UserID2 INT,
-    SongID INT,
-    Timestamp TIMESTAMP,
-    PRIMARY KEY (UserID1, UserID2, SongID, Timestamp),
-    FOREIGN KEY (UserID1) REFERENCES User(ID),
-    FOREIGN KEY (UserID2) REFERENCES User(ID),
-    FOREIGN KEY (SongID) REFERENCES Song(SongID)
 );
 
 CREATE TABLE HelloWorld (
     Hello VARCHAR(255)
 );
+
+SHOW DATABASES;
+
+SHOW TABLES;
