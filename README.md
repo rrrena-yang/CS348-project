@@ -14,5 +14,11 @@ Our big idea is to develop a song-review web app. The database of the web app st
 
 Alternatives, you can execute each query in sample-query manually.
 
+# (IN PROGRESS) How to run flask server
+1. Follow instructions in `how to run` section
+2. Set your username and password in `backend/SQLService.py`
+3. Install python mysql connector `pip install -r requirements.txt`
+4. run `python3 backend/server.py`
+
 
 
