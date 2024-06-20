@@ -19,6 +19,26 @@ Alternatives, you can execute each query in sample-query manually.
 2. Set your username and password in `backend/SQLService.py`
 3. Install python mysql connector `pip install -r requirements.txt`
 4. run `python3 backend/server.py`
+5. navigate to `localhost:5000` to use the UI (you can try searching for song `aaa` in the top right)
+   
+# Some features supported by our UI.
+## Search for song
+## Check for song popularity (like + dislike)
 
+# Additional features supported by backend
+## Find singer category: 
+list categories for singers
+
+1. send a GET request to `http://localhost:5000/api/category/<singerID>`
+2. should return category and the number of songs for each category for the given singer
+
+example: `http://localhost:5000/api/category/2`
+
+## Find song reviews:
+list reviews for a song
+1. send a GET request to `http://localhost:5000/api/review/<int:song_id>`
+2. should return the reviews for the song 
+3. 
+example: `http://localhost:5000/api/review/1`
 
 
