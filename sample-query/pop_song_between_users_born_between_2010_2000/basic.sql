@@ -1,6 +1,6 @@
 WITH Likes AS (
     SELECT SongName
-    FROM song
+    FROM Song
         JOIN UserReviewOnSong ON Song.SongID = UserReviewOnSong.SongID
         JOIN User ON UserReviewOnSong.UserID = User.ID
     WHERE BirthYear >= 2000
