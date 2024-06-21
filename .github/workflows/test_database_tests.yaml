@@ -22,7 +22,7 @@ jobs:
           -e MYSQL_DATABASE=CS348_TEST \
           -e MYSQL_CHARSET=utf8mb4 \
           -e MYSQL_COLLATION=utf8mb4_unicode_ci \
-          -v /home/runner/work/CS348-project/my.cnf:/etc/mysql/conf.d/my.cnf \
+          -v ${{ github.workspace }}/my.cnf:/etc/mysql/conf.d/my.cnf:ro \
           mysql:latest
 
     - name: Wait for MySQL container to be healthy
