@@ -34,7 +34,7 @@ fi
 export MYSQL_PWD="$password"
 
 # Run the SQL script create_table.sql located relative to the script
-mysql -u "$username" CS348_TEST < "$SCRIPT_DIR/create_table.sql"
+mysql -u "$username" < "$SCRIPT_DIR/create_table.sql"
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then

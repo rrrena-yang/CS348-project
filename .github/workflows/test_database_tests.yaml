@@ -25,7 +25,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
+      
     - name: Get MySQL container ID
       id: mysql_container
       run: echo "::set-output name=id::$(docker ps -q -f ancestor=mysql:latest)"
