@@ -46,6 +46,10 @@ jobs:
     - name: Check MySQL container logs
       run: docker logs ${{steps.mysql_container.outputs.id}}
 
+    - name: Check my.cnf in MySQL container
+      run: |
+        docker exec ${{steps.mysql_container.outputs.id}} ls /etc/mysql/conf.d/
+
     - name: Copy scripts to MySQL container
       run: |
         docker cp bootstrap_test.sh ${{steps.mysql_container.outputs.id}}:/root/bootstrap_test.sh
