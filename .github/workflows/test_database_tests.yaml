@@ -16,13 +16,12 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
+          --lower_case_table_names=1
         env:
           MYSQL_ROOT_PASSWORD: MySQL030927
           MYSQL_DATABASE: CS348_TEST
           MYSQL_CHARSET: utf8mb4
           MYSQL_COLLATION: utf8mb4_unicode_ci
-        volumes:
-          - ./my.cnf:/etc/mysql/conf.d/my.cnf
 
     steps:
     - name: Checkout repository
