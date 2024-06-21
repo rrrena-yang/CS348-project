@@ -48,7 +48,7 @@ jobs:
 
     - name: Check my.cnf in MySQL container
       run: |
-        docker exec -i ${{steps.mysql_container.outputs.id}} ls /etc/mysql/conf.d/
+        docker exec -i ${{steps.mysql_container.outputs.id}} cat /etc/mysql/conf.d/my.cnf 
 
     - name: Copy scripts to MySQL container
       run: |
