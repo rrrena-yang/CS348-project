@@ -1,4 +1,4 @@
-SELECT DISTINCT song.songID, song.SongName
-FROM song, singer 
-WHERE song.SingerID is NULL AND
-    (song.Liked+song.Disliked) >= ALL(SELECT (song.Liked+song.Disliked) FROM song WHERE song.SingerID is NULL)
+SELECT DISTINCT Song.SongID, Song.SongName
+FROM Song, Singer 
+WHERE Song.SingerID is NULL AND
+    (Song.Liked+Song.Disliked) >= ALL(SELECT (Song.Liked+Song.Disliked) FROM Song WHERE Song.SingerID is NULL)
