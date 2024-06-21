@@ -48,7 +48,14 @@ INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReview
     (5, 3, "EEE",'2021-01-03', 'Rock', 0, 300, 150, 'spotify.com', 'youtube.com', 2);
 INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
     (6, 3, "LOL",'2021-01-03', 'Rap', 0, 300, 150, 'spotify.com', 'youtube.com', 2);
-
+INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
+    (7, 3, "AAA", '2019-01-01', 'Pop', 0, 100, 50, 'spotify.com', 'youtube.com', 1);
+INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
+    (8, NULL, "BBB", '2019-01-01', 'Rock', 0, 100, 50, 'spotify.com', 'youtube.com', 1);
+INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
+    (9, NULL, "PopSong", '2019-01-01', 'pOP', 0, 100, 100, 'spotify.com', 'youtube.com', 1);
+INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
+    (10, 1, "RockSong", '2021-01-02', 'Rock', 0, 100, 70, 'spotify.com', 'youtube.com', 1);
 
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-01', 1, 1, TRUE, 'Great Teacher Tou very epic');
