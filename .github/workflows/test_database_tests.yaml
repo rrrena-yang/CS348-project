@@ -27,15 +27,16 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Create required directories in MySQL container
-      run: |
-        docker exec mysql mkdir -p /etc/mysql/conf.d
-        docker exec mysql mv /etc/mysql/my.cnf /etc/mysql/conf.d/my.cnf
-
+      
     - name: Get MySQL container ID
       id: mysql_container
       run: echo "::set-output name=id::$(docker ps -q -f ancestor=mysql:latest)"
+
+    - name: Create required directories in MySQL container
+      run: |
+        docker exec -i ${{steps.mysql_container.outputs.id}} mkdir -p /etc/mysql/conf.d
+        docker exec -i ${{steps.mysql_container.outputs.id}} mv /etc/mysql/my.cnf /etc/mysql/conf.d/my.cnf
+
 
     - name: Wait for MySQL
       run: |
