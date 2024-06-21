@@ -22,7 +22,7 @@ jobs:
           MYSQL_CHARSET: utf8mb4
           MYSQL_COLLATION: utf8mb4_unicode_ci
         volumes:
-          - ${{ github.workspace }}/my.cnf:/etc/mysql/conf.d/my.cnf
+          - ${{ github.workspace }}/my.cnf:/etc/mysql/conf.d
 
     steps:
     - name: Checkout repository
@@ -31,12 +31,6 @@ jobs:
     - name: Get MySQL container ID
       id: mysql_container
       run: echo "::set-output name=id::$(docker ps -q -f ancestor=mysql:latest)"
-
-    - name: Create required directories in MySQL container
-      run: |
-        docker exec -i ${{steps.mysql_container.outputs.id}} mkdir -p /etc/mysql/conf.d
-        docker exec -i ${{steps.mysql_container.outputs.id}} mv /etc/mysql/my.cnf /etc/mysql/conf.d/my.cnf
-
 
     - name: Wait for MySQL
       run: |
