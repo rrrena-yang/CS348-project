@@ -16,7 +16,6 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
-          --lower_case_table_names=1
         env:
           MYSQL_ROOT_PASSWORD: MySQL030927
           MYSQL_DATABASE: CS348_TEST
