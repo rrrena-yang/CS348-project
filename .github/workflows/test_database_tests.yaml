@@ -22,7 +22,7 @@ jobs:
           MYSQL_CHARSET: utf8mb4
           MYSQL_COLLATION: utf8mb4_unicode_ci
         volumes:
-          - ${{ github.workspace }}/my.cnf:/etc/mysql/conf.d/my.cnf
+          - ${{ github.workspace }}/my.cnf:/etc/mysql/my.cnf
 
     steps:
     - name: Checkout repository
