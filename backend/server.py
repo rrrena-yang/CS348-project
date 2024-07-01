@@ -1,10 +1,12 @@
 from SQLService import get_connector
 from flask import Flask, jsonify, request, render_template, redirect, url_for
+from r7_user_recommendation import r7
 from r9_popular_song_age_group import r9
 from r10_popular_song_with_unknown_singer import r10
 
 app = Flask(__name__, template_folder='../templates/rock', static_folder='../static')
 
+app.register_blueprint(r7)
 app.register_blueprint(r9)
 app.register_blueprint(r10)
 conn = get_connector()
@@ -100,23 +102,6 @@ def receive_data():
     data = request.json
     # Process the data here
     return jsonify(received_data=data), 201
-
-
-# Get category for singer
-@app.route('/api/category/<int:singer_id>', methods=['GET'])
-def get_singer_category(singer_id):
-    if not singer_id:
-        raise Exception("No singer_id provided")
-    
-    
-    query = f"SELECT Category, COUNT(*) AS NumberOfSongs FROM Song WHERE SingerID = {singer_id} GROUP BY Category ORDER BY NumberOfSongs DESC LIMIT 3"
-    cursor =  conn.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    if len(rows) == 0:
-        raise Exception(f"No song with SingerID {singer_id}")
-    
-    return jsonify(rows)
 
 
 # Search For Song Reviews
