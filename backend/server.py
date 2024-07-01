@@ -1,12 +1,16 @@
 from SQLService import get_connector
 from flask import Flask, jsonify, request, render_template, redirect, url_for
+from r6_search_by_song_name import r6
 from r7_user_recommendation import r7
+from r8_singer_category import r8
 from r9_popular_song_age_group import r9
 from r10_popular_song_with_unknown_singer import r10
 
 app = Flask(__name__, template_folder='../templates/rock', static_folder='../static')
 
+app.register_blueprint(r6)
 app.register_blueprint(r7)
+app.register_blueprint(r8)
 app.register_blueprint(r9)
 app.register_blueprint(r10)
 conn = get_connector()
@@ -23,29 +27,6 @@ def index():
 def hello():
     return jsonify(message="Hello, World!")
 
-@app.route('/search', methods=['GET', 'POST'])
-def search_results():
-    query = request.args.get('query')
-    print(f"Search results for query: {query}")  # Debug print
-    if not query:
-        return render_template('search_results.html', error="Please enter a search query.")
-    search_query = f"SELECT song.SongID, song.SingerID, song.SongName, singer.Name, song.Category FROM Song song JOIN Singer singer ON song.singerID = singer.singerID WHERE SongName Like %s  "
-    cursor = conn.cursor()
-    cursor.execute(search_query, (f"%{query}%",))
-    results = cursor.fetchall()
-    cursor.close()
-    # can not pass the table directly, must use array
-    songs = []
-    for row in results:
-        songs.append({
-            "song_id": row[0],
-            "singer_id": row[1],
-            "song_name": row[2],
-            "singer_name": row[3],
-            "category": row[4],
-            
-        })
-    return render_template('search_results.html', query=query, songs=songs)
 
 @app.route('/song/<int:song_id>', methods=['GET', 'POST'])
 def song_detail(song_id):
