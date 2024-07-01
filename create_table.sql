@@ -107,6 +107,25 @@ CREATE TABLE HelloWorld (
     Hello VARCHAR(255)
 );
 
+-- -- View to aggregate user preferences
+CREATE VIEW UserPreferences AS
+SELECT 
+    urs.UserID,
+    s.Category,
+    s.AlbumID,
+    s.SingerID,
+    COUNT(*) AS LikeCount
+FROM 
+    UserReviewOnSong urs
+JOIN 
+    Song s ON urs.SongID = s.SongID
+JOIN 
+    User u ON urs.UserID = u.ID
+WHERE 
+    urs.IsLike = TRUE
+GROUP BY 
+    urs.UserID, s.Category, s.AlbumID, s.SingerID;
+
 SHOW DATABASES;
 
 SHOW TABLES;
