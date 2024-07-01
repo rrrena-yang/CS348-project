@@ -1,10 +1,12 @@
 from SQLService import get_connector
 from flask import Flask, jsonify, request, render_template, redirect, url_for
 from r9_popular_song_age_group import r9
+from r10_popular_song_with_unknown_singer import r10
 
 app = Flask(__name__, template_folder='../templates/rock', static_folder='../static')
 
 app.register_blueprint(r9)
+app.register_blueprint(r10)
 conn = get_connector()
 @app.route('/', methods=['GET', 'POST'])
 def index():
