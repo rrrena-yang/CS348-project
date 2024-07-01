@@ -1,12 +1,3 @@
--- Drop the database if it exists
-DROP DATABASE IF EXISTS CS348_TEST;
-
--- Create the database
-CREATE DATABASE CS348_TEST;
-
--- Use the newly created database
-USE CS348_TEST;
-
 -- Create the HelloWorld table with one column Hello
 CREATE TABLE User (
     ID INT PRIMARY KEY,

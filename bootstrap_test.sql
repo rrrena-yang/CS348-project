@@ -1,7 +1,3 @@
--- Use the newly created database
-USE CS348_TEST;
-
-
 -- Insert one row with the value 'World'
 INSERT INTO HelloWorld (Hello) VALUES ('World');
 

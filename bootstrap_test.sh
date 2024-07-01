@@ -33,6 +33,13 @@ fi
 # Export password as an environment variable
 export MYSQL_PWD="$password"
 
+sql_commands="
+DROP DATABASE IF EXISTS CS348_TEST;
+CREATE DATABASE CS348_TEST;
+"
+
+mysql -u "$username" -e "$sql_commands"
+
 # Run the SQL script create_table.sql located relative to the script
 mysql -u "$username" CS348_TEST < "$SCRIPT_DIR/create_table.sql"
 
