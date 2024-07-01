@@ -11,6 +11,7 @@ def user_recommendation(user_id):
     with open(file_path, 'r') as file:
         file_content = file.read()
     query = eval('f' + repr(file_content))
+    conn = get_connector()
     cursor = conn.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()
