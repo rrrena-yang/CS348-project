@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Site Meta Tags -->
-    <title>Song Detail</title>
+    <title>User Recommendations</title>
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -24,8 +24,14 @@
 </head>
 
 <body class="main-layout">
+    <!-- Loader -->
+    <div class="loader_bg">
+        <div class="loader"><img src="{{ url_for('static', filename='images/loading.gif') }}" alt="#" /></div>
+    </div>
+    <!-- End loader -->
     <!-- Header -->
     <header>
+        <!-- Header inner -->
         <div class="header">
             <div class="container">
                 <div class="row">
@@ -62,50 +68,31 @@
                 </div>
             </div>
         </div>
+        <!-- End header inner -->
     </header>
-    <!-- Main Content -->
+    <!-- End header -->
+    <!-- Main content -->
     <div class="container mt-5">
-        <h2>Song Details</h2>
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">{{ song['Name'] }}</h3>
-                <p class="card-text"><strong>Singer:</strong> {{ song['SingerID'] }}</p>
-                <p class="card-text"><strong>Publish Date:</strong> {{ song['PublishDate'] }}</p>
-                <p class="card-text"><strong>Category:</strong> {{ song['Category'] }}</p>
-                <p class="card-text"><strong>Total Review Amount:</strong> {{ song['TotalReviewAmount'] }}</p>
-                <p class="card-text"><strong>Liked:</strong> {{ song['Liked'] }}</p>
-                <p class="card-text"><strong>Disliked:</strong> {{ song['Disliked'] }}</p>
-                <p class="card-text"><strong>Spotify Link:</strong> <a href="{{ song['SpotifyLink'] }}" target="_blank">{{ song['SpotifyLink'] }}</a></p>
-                <p class="card-text"><strong>YouTube Link:</strong> <a href="{{ song['YTLink'] }}" target="_blank">{{ song['YTLink'] }}</a></p>
-                <p class="card-text"><strong>Album ID:</strong> {{ song['AlbumID'] }}</p>
-                <a href="{{ url_for('song_data', song_id=song['SongID'], liked=song['Liked'], disliked=song['Disliked'], total_review_amount=song['TotalReviewAmount']) }}" class="btn btn-danger">View Statistics</a>
-            </div>
-        </div>
-        
-        <h3 class="mt-5">User Reviews</h3>
-        {% if reviews %}
-            {% for review in reviews %}
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ review.UserName }}</h5>
-                        <p class="card-text">{{ review.Review }}</p>
-                        <p class="card-text"><strong>Is Liked:</strong> {{ 'Yes' if review.IsLike else 'No' }}</p>
+        <h2>User Recommendations</h2>
+        <div class="row">
+            {% if recommendations %}
+                {% for song in recommendations %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ song.SongName }}</h5>
+                                <p class="card-text">Category: {{ song.Category }}</p>
+                                <p class="card-text">Album ID: {{ song.AlbumID }}</p>
+                                <p class="card-text">Singer ID: {{ song.SingerID }}</p>
+                                <a href="{{ url_for('song_detail', song_id=song.SongID) }}" class="btn btn-danger">View Details</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No reviews found.</p>
-        {% endif %}
-
-        <h3 class="mt-5">Add Your Review</h3>
-        <form method="POST" action="{{ url_for('song_detail', song_id=song['SongID']) }}">
-            <div class="form-group">
-                <label for="review">Review</label>
-                <textarea class="form-control" id="review" name="review" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-success" name="is_like" value="true">Like</button>
-            <button type="submit" class="btn btn-danger" name="is_like" value="false">Dislike</button>
-        </form>
+                {% endfor %}
+            {% else %}
+                <p>No recommendations available.</p>
+            {% endif %}
+        </div>
     </div>
 
     <!-- Javascript files -->
@@ -114,6 +101,7 @@
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery-3.0.0.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/plugin.js') }}"></script>
+    <!-- Sidebar -->
     <script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
