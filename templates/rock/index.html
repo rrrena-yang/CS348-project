@@ -93,22 +93,27 @@
             </div>
         </div>
     </section>
+
     <!-- music-box  -->
     <div class="music-box">
         <div class="container">
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                     <div class="for-box">
-                        <i><img src="{{ url_for('static', filename='icon/icon1.png') }}?v=1" alt="icon" /></i>
-                        <h3>Custom Player</h3>
-                        <p>It is a long established fact that a reader will be distracted by the readable </p>
+                        <a href="{{ url_for('r7.user_recommendation', user_id=session.get('user_id', 1)) }}">
+                            <i><img src="{{ url_for('static', filename='icon/icon1.png') }}?v=1" alt="icon" /></i>
+                            <h3>Recommendations</h3>
+                            <p>We make recommendations only for you!</p>
+                        </a>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                     <div class="for-box">
-                        <i><img src="{{ url_for('static', filename='icon/icon2.png') }}?v=1" alt="icon" /></i>
-                        <h3>Easy Customize</h3>
-                        <p>It is a long established fact that a reader will be distracted by the readable </p>
+                        <a href="{{ url_for('r9.popular_song_age_group', user_id=session.get('user_id', 1)) }}">
+                            <i><img src="{{ url_for('static', filename='icon/icon2.png') }}?v=1" alt="icon" /></i>
+                            <h3>Top Popolarity</h3>
+                            <p>Find out the most popular song in your age group! </p>
+                        </a>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">

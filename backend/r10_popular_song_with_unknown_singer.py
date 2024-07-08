@@ -1,4 +1,4 @@
-from flask import Blueprint, json, request
+from flask import *
 
 from SQLService import get_connector
 
@@ -16,8 +16,4 @@ WHERE Song.SingerID is NULL AND
     cursor = conn.cursor()
     cursor.execute(query)
     songs = cursor.fetchall()
-    conn.close()
-    songs_list = [{"song_id": song[0], "song_name": song[1]} for song in songs]
-    songs_json = json.dumps(songs_list, indent=4)
-
-    return songs_json
+    return render_template('user_recommendation.html', songs=songs)

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Site Meta Tags -->
+    <title>User Recommendations</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}" type="image/gif" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="main-layout">
+    <!-- Loader -->
+    <div class="loader_bg">
+        <div class="loader"><img src="{{ url_for('static', filename='images/loading.gif') }}" alt="#" /></div>
+    </div>
+    <!-- End loader -->
+    <!-- Header -->
+    <header>
+        <!-- Header inner -->
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col logo_section">
+                        <div class="full">
+                            <div class="center-desk">
+                                <div class="logo">
+                                    <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="logo" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10">
+                        <div class="menu-area">
+                            <div class="limit-box">
+                                <nav class="main-menu">
+                                    <ul class="menu-area-main">
+                                        <li class="active"> <a href="{{ url_for('index') }}">Home</a> </li>
+                                        <li> <a href="{{ url_for('all_songs') }}">Song</a> </li>
+                                        <li> <a href="{{ url_for('all_singers') }}">Singer</a> </li>
+                                        <li> <a href="{{ url_for('login') }}">Login</a> </li>
+                                        <li> <a href= "{{ url_for('user_info') }}">User</a> </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                        <form class="search" method="POST" action="{{ url_for('index') }}">
+                            <input class="form-control" type="text" placeholder="Search" name="query" required>
+                            <button type="submit"><img src="{{ url_for('static', filename='images/search_icon.png') }}"></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End header inner -->
+    </header>
+    <!-- End header -->
+    <!-- Main content -->
+    <div class="container mt-5">
+        <h2>User Recommendations</h2>
+        <div class="row">
+            {% if recommendations %}
+                {% for song in recommendations %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ song.SongName }}</h5>
+                                <p class="card-text">Category: {{ song.Category }}</p>
+                                <p class="card-text">Album ID: {{ song.AlbumID }}</p>
+                                <p class="card-text">Singer ID: {{ song.SingerID }}</p>
+                                <a href="{{ url_for('song_detail', song_id=song.SongID) }}" class="btn btn-danger">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No recommendations available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Javascript files -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.0.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugin.js') }}"></script>
+    <!-- Sidebar -->
+    <script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function() {
+                $(this).addClass('transition');
+            }, function() {
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+</body>
+
+</html>
