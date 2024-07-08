@@ -68,26 +68,16 @@ INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES
     ('2021-01-02', 5, 1, TRUE, 'Janes review');
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-02', 6, 1, FALSE, 'Hater review');
- INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-02', 8, 1, TRUE, 'liker review');
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-02', 7, 1, TRUE, 'Joes review');
 
--- View to aggregate user preferences
-CREATE VIEW UserPreferences AS
-SELECT 
-    urs.UserID,
-    s.Category,
-    s.AlbumID,
-    s.SingerID,
-    COUNT(*) AS LikeCount
-FROM 
-    UserReviewOnSong urs
-JOIN 
-    Song s ON urs.SongID = s.SongID
-JOIN 
-    User u ON urs.UserID = u.ID
-WHERE 
-    urs.IsLike = TRUE
-GROUP BY 
-    urs.UserID, s.Category, s.AlbumID, s.SingerID;
+SELECT * FROM Song;
+
+UPDATE UserReviewOnSong SET IsLike = TRUE WHERE UserID = 3 AND SongID = 1;
+
+SELECT * FROM Song;
+
+
+
