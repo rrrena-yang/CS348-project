@@ -1,14 +1,10 @@
 from SQLService import get_connector
-<<<<<<< HEAD
 from flask import Flask, jsonify, request, render_template, redirect, url_for, flash, session
-=======
-from flask import Flask, jsonify, request, render_template, redirect, url_for
 from r6_search_by_song_name import r6
 from r7_user_recommendation import r7
 from r8_singer_category import r8
 from r9_popular_song_age_group import r9
 from r10_popular_song_with_unknown_singer import r10
->>>>>>> c4290a42f394614b6d1081eda883e7a907e1dcb4
 
 app = Flask(__name__, template_folder='../templates/rock', static_folder='../static')
 
@@ -18,11 +14,9 @@ app.register_blueprint(r8)
 app.register_blueprint(r9)
 app.register_blueprint(r10)
 conn = get_connector()
-<<<<<<< HEAD
+
 app.secret_key = "030927"
 
-=======
->>>>>>> c4290a42f394614b6d1081eda883e7a907e1dcb4
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -65,7 +59,7 @@ def singer_detail(singer_id):
 def hello():
     return jsonify(message="Hello, World!")
 
-<<<<<<< HEAD
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -166,8 +160,6 @@ def search_results():
             
         })
     return render_template('search_results.html', query=query, songs=songs)
-=======
->>>>>>> c4290a42f394614b6d1081eda883e7a907e1dcb4
 
 @app.route('/song/<int:song_id>', methods=['GET', 'POST'])
 def song_detail(song_id):
@@ -258,28 +250,6 @@ def search_for_song_reviews(song_id):
   
    return jsonify(rows)
 
-# Add User Song reviews
-# ?? database route does not accept any url methods.
-@app.route('/api/add_review/<int:song_id>/<int:user_id>/<is_like>/<review>', methods=['POST'])
-def add_review(song_id, user_id, is_like, review):
-    # data = request.json
-    # song_id = data['song_id']
-    # review = data['review']
-    # user_id = data['user_id']
-    # is_like = data['is_like']
-    if not song_id:
-        raise Exception("No song_id provided")
-    if not review:
-        raise Exception("No review provided")
-    if not user_id:
-        raise Exception("No user_id provided")
-    print("asd")
-    query = f"INSERT INTO UserReviewOnSong (UserID, SongID, IsLike, Review) VALUES ({user_id}, {song_id}, {is_like}, '{review}');"
-    print(query)
-    cursor = conn.cursor()
-    cursor.execute(query)
-    conn.commit()
-    return jsonify(message="Review added successfully"), 201
 
 
 if __name__ == '__main__':
