@@ -2,30 +2,45 @@
 <html lang="en">
 
 <head>
-    <!-- Basic Meta Tags -->
+    <!-- basic -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- mobile metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Site Meta Tags -->
-    <title>Song Detail</title>
-    <!-- Stylesheets -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>User Information</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- style css -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Responsive-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <!-- fevicon -->
     <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}" type="image/gif" />
+    <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}">
+    <!-- Tweaks for older IEs-->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 </head>
+<!-- body -->
 
 <body class="main-layout">
-    <!-- Header -->
+    <!-- loader  -->
+    <div class="loader_bg">
+        <div class="loader"><img src="{{ url_for('static', filename='images/loading.gif') }}" alt="#" /></div>
+    </div>
+    <!-- end loader -->
+    <!-- header -->
     <header>
+        <!-- header inner -->
         <div class="header">
             <div class="container">
                 <div class="row">
@@ -46,6 +61,7 @@
                                         <li class="active"> <a href="{{ url_for('index') }}">Home</a> </li>
                                         <li> <a href="{{ url_for('all_songs') }}">Song</a> </li>
                                         <li> <a href="{{ url_for('all_singers') }}">Singer</a> </li>
+                                        <!--<li> <a href="contact.html">Contact</a> </li>-->
                                         <li> <a href="{{ url_for('login') }}">Login</a> </li>
                                         <li> <a href= "{{ url_for('user_info') }}">User</a> </li>
                                     </ul>
@@ -62,53 +78,41 @@
                 </div>
             </div>
         </div>
+        <!-- end header inner -->
     </header>
-    <!-- Main Content -->
-    <div class="container mt-5">
-        <h2>Song Details</h2>
+    <!-- end header -->
+
+    <div class="container">
+        <h2 class="mt-5">User Information</h2>
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">{{ song['Name'] }}</h3>
-                <p class="card-text"><strong>Singer:</strong> {{ song['SingerID'] }}</p>
-                <p class="card-text"><strong>Publish Date:</strong> {{ song['PublishDate'] }}</p>
-                <p class="card-text"><strong>Category:</strong> {{ song['Category'] }}</p>
-                <p class="card-text"><strong>Total Review Amount:</strong> {{ song['TotalReviewAmount'] }}</p>
-                <p class="card-text"><strong>Liked:</strong> {{ song['Liked'] }}</p>
-                <p class="card-text"><strong>Disliked:</strong> {{ song['Disliked'] }}</p>
-                <p class="card-text"><strong>Spotify Link:</strong> <a href="{{ song['SpotifyLink'] }}" target="_blank">{{ song['SpotifyLink'] }}</a></p>
-                <p class="card-text"><strong>YouTube Link:</strong> <a href="{{ song['YTLink'] }}" target="_blank">{{ song['YTLink'] }}</a></p>
-                <p class="card-text"><strong>Album ID:</strong> {{ song['AlbumID'] }}</p>
-                <a href="{{ url_for('song_data', song_id=song['SongID'], liked=song['Liked'], disliked=song['Disliked'], total_review_amount=song['TotalReviewAmount']) }}" class="btn btn-danger">View Statistics</a>
+                <h5 class="card-title">Welcome, {{ user['UserName'] }}</h5>
+                <p class="card-text"><strong>Name:</strong> {{ user['Name'] }}</p>
+                <p class="card-text"><strong>Birth Year:</strong> {{ user['BirthYear'] }}</p>
+                <p class="card-text"><strong>Gender:</strong> {{ user['Gender'] }}</p>
+                <p class="card-text"><strong>Location:</strong> {{ user['Location'] }}</p>
             </div>
         </div>
-        
-        <h3 class="mt-5">User Reviews</h3>
-        {% if reviews %}
-            {% for review in reviews %}
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ review.UserName }}</h5>
-                        <p class="card-text">{{ review.Review }}</p>
-                        <p class="card-text"><strong>Is Liked:</strong> {{ 'Yes' if review.IsLike else 'No' }}</p>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No reviews found.</p>
-        {% endif %}
 
-        <h3 class="mt-5">Add Your Review</h3>
-        <form method="POST" action="{{ url_for('song_detail', song_id=song['SongID']) }}">
-            <div class="form-group">
-                <label for="review">Review</label>
-                <textarea class="form-control" id="review" name="review" rows="3"></textarea>
+        <h2 class="mt-5">User Reviews on Songs</h2>
+        <div class="card">
+            <div class="card-body">
+                {% if reviews %}
+                    {% for review in reviews %}
+                        <div class="mb-3">
+                            <h5 class="card-title">{{ review.SongName }} by {{ review.SingerName }}</h5>
+                            <p class="card-text"><strong>Review:</strong> {{ review.Review }}</p>
+                            <p class="card-text"><strong>Is Liked:</strong> {{ 'Yes' if review.IsLike else 'No' }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No reviews found.</p>
+                {% endif %}
             </div>
-            <button type="submit" class="btn btn-success" name="is_like" value="true">Like</button>
-            <button type="submit" class="btn btn-danger" name="is_like" value="false">Dislike</button>
-        </form>
+        </div>
     </div>
 
-    <!-- Javascript files -->
+    <!-- Javascript files-->
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
@@ -116,7 +120,7 @@
     <script src="{{ url_for('static', filename='js/plugin.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
     <script>
         $(document).ready(function() {
             $(".fancybox").fancybox({

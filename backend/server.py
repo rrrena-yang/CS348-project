@@ -1,9 +1,10 @@
 from SQLService import get_connector
-from flask import Flask, jsonify, request, render_template, redirect, url_for
+from flask import Flask, jsonify, request, render_template, redirect, url_for, flash, session
 
 app = Flask(__name__, template_folder='../templates/rock', static_folder='../static')
 
 conn = get_connector()
+app.secret_key = "030927"
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -13,10 +14,116 @@ def index():
         return redirect(url_for('search_results', query=query))
     return render_template('index.html')
 
+@app.route('/all_songs', methods=['GET'])
+def all_songs():
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM Song")
+    songs = cursor.fetchall()
+
+    cursor.close()
+    return render_template('all_songs.html', songs=songs)
+
+@app.route('/all_singers', methods=['GET'])
+def all_singers():
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM Singer")
+    singers = cursor.fetchall()
+    cursor.close()
+
+    return render_template('all_singers.html', singers=singers)
+
+@app.route('/singer/<int:singer_id>', methods=['GET'])
+def singer_detail(singer_id):
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM Singer WHERE SingerID = %s", (singer_id,))
+    singer = cursor.fetchone()
+    cursor.execute("SELECT * FROM Song WHERE SingerID = %s", (singer_id,))
+    songs = cursor.fetchall()
+    cursor.close()
+
+    return render_template('singer_detail.html', singer=singer, songs=songs)
 
 @app.route('/api/hello',methods=['GET', 'POST'])
 def hello():
     return jsonify(message="Hello, World!")
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        name = request.form.get('name')
+        birthyear = request.form.get('birthyear')
+        gender = request.form.get('gender')
+        location = request.form.get('location')
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT MAX(ID) FROM User")
+        uid = cursor.fetchone()[0]
+        new_uid = (uid + 1) if uid else 1
+
+        cursor.execute("""
+            INSERT INTO User (ID, UserName, UserPassword, Name, BirthYear, Gender, Location)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """, (new_uid, username, password, name, birthyear, gender, location))
+
+        conn.commit()
+        cursor.close()
+
+        flash('Sign up successful! Please log in.', 'success')
+        return redirect(url_for('login'))
+
+    return render_template('sign_up.html')
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT ID, UserPassword FROM User WHERE UserName = %s", (username,))
+        user = cursor.fetchone()
+        cursor.close()
+
+        if user and user[1] == password:
+            session['user_id'] = user[0]
+            flash('Login successful!', 'success')
+            return redirect(url_for('user_info'))
+        else:
+            flash('Invalid username or password', 'danger')
+
+    return render_template('login.html')
+
+@app.route('/user_info')
+def user_info():
+    if 'user_id' not in session:
+        flash('You need to log in first', 'danger')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM User WHERE ID = %s", (user_id,))
+    user = cursor.fetchone()
+    
+    cursor.execute("""
+        SELECT s.SongName AS SongName, si.Name AS SingerName, ur.IsLike, ur.Review
+        FROM UserReviewOnSong ur 
+        JOIN Song s ON ur.SongID = s.SongID 
+        JOIN Singer si ON si.SingerID = s.SingerID 
+        WHERE ur.UserID = %s
+    """, (user_id,))
+    reviews = cursor.fetchall()
+
+    cursor.close()
+
+    return render_template('user.html', user=user, reviews=reviews)
+
+
 
 @app.route('/search', methods=['GET', 'POST'])
 def search_results():
@@ -44,29 +151,44 @@ def search_results():
 
 @app.route('/song/<int:song_id>', methods=['GET', 'POST'])
 def song_detail(song_id):
-    search_query = f"SELECT * FROM Song WHERE SongID Like %s "
-    cursor = conn.cursor()
-    #print("hhhh"+ song_id)
-    cursor.execute(search_query, (song_id,))
-    result = cursor.fetchone()
+    cursor = conn.cursor(dictionary=True)
+
+    if request.method == 'POST':
+        user_id = session.get('user_id')
+        if not user_id:
+            flash('You need to log in first', 'danger')
+            return redirect(url_for('login'))
+
+        is_like = request.form.get('is_like') == 'true'
+        review = request.form.get('review')
+        
+        cursor.execute("""
+            INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review)
+            VALUES (NOW(), %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+                Timestamp = NOW(),
+                IsLike = VALUES(IsLike),
+                Review = VALUES(Review)
+        """, (user_id, song_id, is_like, review))
+        
+        conn.commit()
+        flash('Review submitted successfully', 'success')
+    
+    cursor.execute("SELECT * FROM Song WHERE SongID = %s", (song_id,))
+    song = cursor.fetchone()
+
+    cursor.execute("""
+        SELECT ur.Review, ur.IsLike, u.UserName
+        FROM UserReviewOnSong ur
+        JOIN User u ON ur.UserID = u.ID
+        WHERE ur.SongID = %s
+    """, (song_id,))
+    reviews = cursor.fetchall()
+    
     cursor.close()
-    if not result:
-        print(f"No song found with ID: {song_id}")  # Debug print
-        return "Song not found", 404
-    song = {
-        "song_id":  result[0],
-        "singer_id": result[1],
-        "name":  result[2],
-        "publish_date": result[3],
-        "category": result[4],
-        "total_review_amount": result[5],
-        "liked":  result [6],
-        "disliked":  result [7],
-        "spotify_link": result [8],
-        "yt_link":  result[9],
-        "album_id":  result[10]
-    }
-    return render_template('song_detail.html', song=song)
+
+    return render_template('song_detail.html', song=song, reviews=reviews)
+
 
 @app.route('/song/<int:song_id>/data', methods=['GET', 'POST'])
 def song_data(song_id):

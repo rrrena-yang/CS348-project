@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Site Meta Tags -->
-    <title>Song Detail</title>
+    <title>All Singers</title>
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -46,6 +46,7 @@
                                         <li class="active"> <a href="{{ url_for('index') }}">Home</a> </li>
                                         <li> <a href="{{ url_for('all_songs') }}">Song</a> </li>
                                         <li> <a href="{{ url_for('all_singers') }}">Singer</a> </li>
+                                        <!--<li> <a href="contact.html">Contact</a> </li>-->
                                         <li> <a href="{{ url_for('login') }}">Login</a> </li>
                                         <li> <a href= "{{ url_for('user_info') }}">User</a> </li>
                                     </ul>
@@ -65,47 +66,21 @@
     </header>
     <!-- Main Content -->
     <div class="container mt-5">
-        <h2>Song Details</h2>
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">{{ song['Name'] }}</h3>
-                <p class="card-text"><strong>Singer:</strong> {{ song['SingerID'] }}</p>
-                <p class="card-text"><strong>Publish Date:</strong> {{ song['PublishDate'] }}</p>
-                <p class="card-text"><strong>Category:</strong> {{ song['Category'] }}</p>
-                <p class="card-text"><strong>Total Review Amount:</strong> {{ song['TotalReviewAmount'] }}</p>
-                <p class="card-text"><strong>Liked:</strong> {{ song['Liked'] }}</p>
-                <p class="card-text"><strong>Disliked:</strong> {{ song['Disliked'] }}</p>
-                <p class="card-text"><strong>Spotify Link:</strong> <a href="{{ song['SpotifyLink'] }}" target="_blank">{{ song['SpotifyLink'] }}</a></p>
-                <p class="card-text"><strong>YouTube Link:</strong> <a href="{{ song['YTLink'] }}" target="_blank">{{ song['YTLink'] }}</a></p>
-                <p class="card-text"><strong>Album ID:</strong> {{ song['AlbumID'] }}</p>
-                <a href="{{ url_for('song_data', song_id=song['SongID'], liked=song['Liked'], disliked=song['Disliked'], total_review_amount=song['TotalReviewAmount']) }}" class="btn btn-danger">View Statistics</a>
-            </div>
-        </div>
-        
-        <h3 class="mt-5">User Reviews</h3>
-        {% if reviews %}
-            {% for review in reviews %}
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ review.UserName }}</h5>
-                        <p class="card-text">{{ review.Review }}</p>
-                        <p class="card-text"><strong>Is Liked:</strong> {{ 'Yes' if review.IsLike else 'No' }}</p>
+        <h2>All Singers</h2>
+        <div class="row">
+            {% for singer in singers %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ singer.Name }}</h5>
+                            <p class="card-text">Age: {{ singer.Age }}</p>
+                            <p class="card-text">Country: {{ singer.Country }}</p>
+                            <a href="{{ url_for('singer_detail', singer_id=singer.SingerID) }}" class="btn btn-danger">View Details</a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
-        {% else %}
-            <p>No reviews found.</p>
-        {% endif %}
-
-        <h3 class="mt-5">Add Your Review</h3>
-        <form method="POST" action="{{ url_for('song_detail', song_id=song['SongID']) }}">
-            <div class="form-group">
-                <label for="review">Review</label>
-                <textarea class="form-control" id="review" name="review" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-success" name="is_like" value="true">Like</button>
-            <button type="submit" class="btn btn-danger" name="is_like" value="false">Dislike</button>
-        </form>
+        </div>
     </div>
 
     <!-- Javascript files -->
