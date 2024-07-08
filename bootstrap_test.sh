@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Get the directory where this script is located
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+
 # Hardcoded username and password (leave empty for prompting)
 HARDCODED_USERNAME="root"
 HARDCODED_PASSWORD="MySQL030927"
@@ -26,33 +29,45 @@ if [[ "$confirm" != "y" && "$confirm" != "" ]]; then
     echo "Aborted!"
     exit 1
 fi
-echo "$confirm"
 
 # Export password as an environment variable
 export MYSQL_PWD="$password"
 
-# Run the SQL script from bootstrap.sql
-mysql -u "$username" <<EOF
-$(cat create_table.sql)
-EOF
+sql_commands="
+DROP DATABASE IF EXISTS CS348_TEST;
+CREATE DATABASE CS348_TEST;
+"
 
-# Run the SQL script from bootstrap.sql
-mysql -u "$username" <<EOF
-$(cat bootstrap_test.sql)
-EOF
+mysql -u "$username" -e "$sql_commands"
 
+# Run the SQL script create_table.sql located relative to the script
+mysql -u "$username" CS348_TEST < "$SCRIPT_DIR/create_table.sql"
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then
-    echo "Database CS348_TEST has been reset successfully."
+    echo "create_table.sql executed successfully."
 else
-    echo "Failed to reset the database CS348_TEST."
+    echo "Failed to execute create_table.sql."
     unset MYSQL_PWD
     exit 1
 fi
 
+# Run the SQL script bootstrap_test.sql located relative to the script
+mysql -u "$username" CS348_TEST < "$SCRIPT_DIR/bootstrap_test.sql"
+
+# Check if the command was successful
+if [ $? -eq 0 ]; then
+    echo "bootstrap_test.sql executed successfully."
+else
+    echo "Failed to execute bootstrap_test.sql."
+    unset MYSQL_PWD
+    exit 1
+fi
+
+echo "Database CS348_TEST has been reset successfully."
+
 # View tables in the database
-mysql -u"$username" -e "USE CS348_TEST; SHOW TABLES;"
+mysql -u "$username" -e "USE CS348_TEST; SHOW TABLES;"
 
 # Unset the password environment variable
 unset MYSQL_PWD

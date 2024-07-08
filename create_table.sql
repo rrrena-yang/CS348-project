@@ -1,12 +1,3 @@
--- Drop the database if it exists
-DROP DATABASE IF EXISTS CS348_TEST;
-
--- Create the database
-CREATE DATABASE CS348_TEST;
-
--- Use the newly created database
-USE CS348_TEST;
-
 -- Create the HelloWorld table with one column Hello
 CREATE TABLE User (
     ID INT PRIMARY KEY,
@@ -26,7 +17,7 @@ CREATE TABLE Album (
 CREATE TABLE Singer (
     SingerID INT PRIMARY KEY,
     Name VARCHAR(50),
-    Age INT,
+    BirthYear INT,
     SongProduced INT,
     Country VARCHAR(50)
 );
@@ -93,3 +84,7 @@ CREATE TABLE UserReviewOnSinger (
 CREATE TABLE HelloWorld (
     Hello VARCHAR(255)
 );
+
+SHOW DATABASES;
+
+SHOW TABLES;

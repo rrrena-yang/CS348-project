@@ -1,9 +1,20 @@
 from SQLService import get_connector
 from flask import Flask, jsonify, request, render_template, redirect, url_for, flash, session
+from r6_search_by_song_name import r6
+from r7_user_recommendation import r7
+from r8_singer_category import r8
+from r9_popular_song_age_group import r9
+from r10_popular_song_with_unknown_singer import r10
 
 app = Flask(__name__, template_folder='../templates/rock', static_folder='../static')
 
+app.register_blueprint(r6)
+app.register_blueprint(r7)
+app.register_blueprint(r8)
+app.register_blueprint(r9)
+app.register_blueprint(r10)
 conn = get_connector()
+
 app.secret_key = "030927"
 
 @app.route('/', methods=['GET', 'POST'])
@@ -47,6 +58,7 @@ def singer_detail(singer_id):
 @app.route('/api/hello',methods=['GET', 'POST'])
 def hello():
     return jsonify(message="Hello, World!")
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -219,6 +231,26 @@ def receive_data():
     data = request.json
     # Process the data here
     return jsonify(received_data=data), 201
+
+
+# Search For Song Reviews
+@app.route('/api/review/<int:song_id>', methods=['GET'])
+def search_for_song_reviews(song_id):
+   if not song_id:
+       raise Exception("No song_id provided")
+
+
+   query = f"SELECT Review FROM UserReviewOnSong WHERE SongID = {song_id} "
+   cursor = conn.cursor()
+   cursor.execute(query)
+   rows = cursor.fetchall()
+   if len(rows) == 0:
+       raise Exception(f"No reviews with song_id {song_id}")
+  
+  
+   return jsonify(rows)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
