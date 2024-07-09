@@ -26,4 +26,5 @@ Diff AS (
 SELECT SongName,
     COUNT(*)
 FROM Diff
-GROUP BY SongName;
+GROUP BY SongName
+ORDER BY COUNT(*) DESC;

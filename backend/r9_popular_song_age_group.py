@@ -42,7 +42,8 @@ def popular_song_age_group():
         SELECT d.SongName, d.SongID,
             COUNT(*) AS Popularity
         FROM Diff d
-        GROUP BY d.SongName, d.SongID;
+        GROUP BY d.SongName, d.SongID
+        ORDER BY COUNT(*) DESC;
         """
 
         conn = get_connector()
