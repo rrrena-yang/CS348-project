@@ -53,7 +53,7 @@ else
 fi
 
 # mysql -u "$username" CS348 < "$SCRIPT_DIR/bootstrap.sql"
-python3 bootstrap_prod.py
+python3 "$SCRIPT_DIR/bootstrap_prod.py"
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then
