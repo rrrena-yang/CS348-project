@@ -30,6 +30,7 @@ except mysql.connector.Error as err:
 df = pd.read_csv('top_10000_1960-now.csv')
 
 
+print("Generating Album, Song and Singer data...")
 def create_maps_from_csv(file_path):
     name_to_birthdate = {}
     name_to_country = {}
@@ -145,6 +146,7 @@ for _, row in df.iterrows():
 from faker import Faker
 fake = Faker()
 
+print("Generating User data...")
 for i in range(100000):
     try:
         name = fake.name()
@@ -160,8 +162,11 @@ for i in range(100000):
         continue
 
 # for each user, randomly like some songs and dislike some songs
-
+print("Generating review on songs data...")
 for i in range(100000):
+    rand = np.random.randint(0, 10)
+    if rand != 0:
+        continue
     like_songs_count = np.random.randint(0, 5)
     dislike_songs_count = np.random.randint(0, 2)
 
@@ -195,7 +200,7 @@ for i in range(100000):
             continue
 
 # generate review for singer
-
+print("Generating review on singer data...")
 for i in range(10000):
     like_songs_count = np.random.randint(0, 3)
     dislike_songs_count = np.random.randint(0, 2)
