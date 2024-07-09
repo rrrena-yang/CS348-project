@@ -20,7 +20,6 @@ INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES
     (2, 'password', 'username', 'name', 1999);
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (3, 'password', 'username', 'name', 1999);
-
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (4, 'password', 'John', 'John', 2001);
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
@@ -53,14 +52,6 @@ INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReview
 INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReviewAmount, Liked, Disliked, SpotifyLink, YTLink, AlbumID) VALUES 
     (10, 1, "RockSong", '2021-01-02', 'Rock', 0, 100, 70, 'spotify.com', 'youtube.com', 1);
 
-INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
-    ('2021-01-01', 1, 1, TRUE, 'Great Teacher Tou very epic');
-INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
-    ('2021-01-03', 1, 2, TRUE, 'Teacher G is good');
-INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
-    ('2021-01-02', 2, 5, TRUE, 'Good Teacher G epic');
-INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
-    ('2021-01-02', 3, 1, FALSE, 'Good Teacher G epic');
 
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-02', 4, 1, TRUE, 'Johns review');
@@ -73,11 +64,34 @@ INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-02', 7, 1, TRUE, 'Joes review');
 
+
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-01', 1, 1, TRUE, 'Yoop review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-03', 1, 2, TRUE, 'PM Review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 1, 3, FALSE, 'Hater review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 1, 4, TRUE, 'liker review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 1, 5, TRUE, 'Joes review');
+
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 2, 1, TRUE, 'Johns review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 2, 2, TRUE, 'Janes review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 2, 3, FALSE, 'Hater review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 2, 4, TRUE, 'liker review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 2, 5, TRUE, 'Joes review');
+
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 3, 1, FALSE, 'Good Teacher G epic');
+
 SELECT * FROM Song;
 
 UPDATE UserReviewOnSong SET IsLike = TRUE WHERE UserID = 3 AND SongID = 1;
 
 SELECT * FROM Song;
-
-
-
