@@ -1,4 +1,4 @@
-name: MySQL CI
+name: Bootstrap Production Data
 
 on: [pull_request]
 
