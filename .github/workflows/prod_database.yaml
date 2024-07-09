@@ -48,10 +48,12 @@ jobs:
         docker cp create_table.sql mysql-container:/root/create_table.sql
         docker cp bootstrap.sql mysql-container:/root/bootstrap.sql
         docker cp bootstrap_prod.py mysql-container:/root/bootstrap_prod.py
+        docker cp requirements.txt mysql-container:/root/requirements.txt
 
     - name: Run bootstrap.sh inside MySQL container
       run: |
         docker exec -i mysql-container sh -c 'chmod +x /root/bootstrap.sh && /root/bootstrap.sh'
+        docker exec -i mysql-container sh -c 'pip install -r /root/requirements.txt'
 
     - name: Stop MySQL container
       run: docker stop mysql-container
