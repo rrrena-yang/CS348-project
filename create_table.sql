@@ -6,31 +6,31 @@ CREATE TABLE User (
     Name VARCHAR(30),
     BirthYear INT,
     Gender VARCHAR(10),
-    Location VARCHAR(50)
+    Location VARCHAR(100)
 );
 
 CREATE TABLE Album (
     AlbumID INT PRIMARY KEY,
-    Name VARCHAR(50)
+    Name VARCHAR(300)
 );
 
 CREATE TABLE Singer (
     SingerID INT PRIMARY KEY,
-    Name VARCHAR(50),
+    Name VARCHAR(150),
     BirthYear INT,
-    SongProduced INT,
+    SongProduced INT DEFAULT 0,
     Country VARCHAR(50)
 );
 
 CREATE TABLE Song (
     SongID INT PRIMARY KEY,
     SingerID INT,
-    SongName VARCHAR(50),
-    PublishDate DATE,
-    Category VARCHAR(50),
-    TotalReviewAmount INT,
-    Liked INT,
-    Disliked INT,
+    SongName VARCHAR(200),
+    PublishDate DATE DEFAULT NULL,
+    Category VARCHAR(400),
+    TotalReviewAmount INT DEFAULT 0,
+    Liked INT DEFAULT 0,
+    Disliked INT DEFAULT 0,
     SpotifyLink VARCHAR(255),
     YTLink VARCHAR(255),
     AlbumID INT,
@@ -69,6 +69,22 @@ END;
 //
 
 DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER UpdateSingerSongCount
+AFTER INSERT ON Song
+FOR EACH ROW
+BEGIN 
+    UPDATE Singer
+    SET SongProduced = SongProduced + 1
+    WHERE SingerID = NEW.SingerID;
+END;
+
+//
+
+DELIMITER ;
+
 
 CREATE TABLE UserReviewOnSinger (
     Timestamp TIMESTAMP,
