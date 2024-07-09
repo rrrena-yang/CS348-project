@@ -1,5 +1,5 @@
 WITH UserLikes AS (
-    SELECT SongName
+    SELECT SongID
     FROM UserReviewOnSong
     WHERE UserID = 1 AND IsLike = TRUE
 ), 
