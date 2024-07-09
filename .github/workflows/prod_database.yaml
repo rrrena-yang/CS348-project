@@ -52,6 +52,8 @@ jobs:
 
     - name: Install requirements and run bootstrap.sh inside MySQL container
       run: |
+        docker exec -i mysql-container sh -c 'sudo apt update'
+        docker exec -i mysql-container sh -c 'sudo apt install python3-pip'
         docker exec -i mysql-container sh -c 'pip install -r /root/requirements.txt'
         docker exec -i mysql-container sh -c 'chmod +x /root/bootstrap.sh && /root/bootstrap.sh'
 
