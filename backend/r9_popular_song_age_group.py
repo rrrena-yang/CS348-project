@@ -39,7 +39,7 @@ Diff AS (
     SELECT *
     FROM Dislikes
 )
-SELECT SongName,
+SELECT SongName, Diff.SongID,
     COUNT(*)
 FROM Diff
 JOIN SONG on Diff.SongID = Song.SongID
