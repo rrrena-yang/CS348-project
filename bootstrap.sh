@@ -52,6 +52,9 @@ else
     exit 1
 fi
 
+# mysql -u "$username" CS348 < "$SCRIPT_DIR/bootstrap.sql"
+python3 bootstrap_prod.py
+
 # Check if the command was successful
 if [ $? -eq 0 ]; then
     echo "bootstrap.sql executed successfully."
@@ -66,6 +69,5 @@ echo "Database CS348 has been reset successfully."
 # View tables in the database
 mysql -u "$username" -e "USE CS348; SHOW TABLES;"
 
-python3 bootstrap_prod.py
 # Unset the password environment variable
 unset MYSQL_PWD
