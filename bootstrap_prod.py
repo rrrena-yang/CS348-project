@@ -165,7 +165,7 @@ for i in range(100000):
 print("Generating review on songs data...")
 for i in range(100000):
     rand = np.random.randint(0, 10)
-    if rand != 0:
+    if rand % 3 != 0:
         continue
     like_songs_count = np.random.randint(0, 5)
     dislike_songs_count = np.random.randint(0, 2)
