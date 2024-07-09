@@ -1,4 +1,4 @@
-name: MySQL CI
+name: Run Test Data Tests
 
 on: [pull_request]
 
