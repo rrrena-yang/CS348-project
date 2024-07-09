@@ -28,5 +28,5 @@ SELECT SongName, Diff.SongID,
 FROM Diff
 JOIN SONG on Diff.SongID = Song.SongID
 GROUP BY Diff.SongID
-ORDER BY COUNT(*) DESC
+ORDER BY COUNT(*) DESC, SongName
 LIMIT 10;
