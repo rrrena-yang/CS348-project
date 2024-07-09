@@ -219,7 +219,6 @@ for i in range(10000):
             cursor.execute(query, (timestamp, i, singer_id, True, review))
             cnx.commit()
         except Exception as e:
-            print(e)
             continue
 
     for singer_id in dislike_singers:
