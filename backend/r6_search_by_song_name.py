@@ -5,7 +5,7 @@ from SQLService import get_connector
 
 r6 = Blueprint('r6', __name__)
 
-
+# this has been implemented in @app
 @r6.route('/search', methods=['GET', 'POST'])
 def search_results():
     query = request.args.get('query')

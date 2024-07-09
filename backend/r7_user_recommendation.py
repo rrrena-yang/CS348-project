@@ -1,7 +1,6 @@
 from SQLService import get_connector
-from flask import Flask, jsonify, request, Blueprint
+from flask import *
 
-from SQLService import get_connector
 
 r7 = Blueprint('r7', __name__)
 
@@ -15,4 +14,4 @@ def user_recommendation(user_id):
     cursor = conn.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()
-    return jsonify(rows)
+    return render_template('user_recommendation.html', songs=rows)
