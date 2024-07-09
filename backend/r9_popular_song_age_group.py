@@ -15,36 +15,37 @@ def popular_song_age_group():
         
         query = f"""
         WITH Likes AS (
-            SELECT s.SongName, s.SongID
-            FROM Song s
-                JOIN UserReviewOnSong ur ON s.SongID = ur.SongID
-                JOIN User u ON ur.UserID = u.ID
-            WHERE u.BirthYear >= {start_year}
-                AND u.BirthYear <= {end_year}
-                AND ur.IsLike = TRUE
-        ),
-        Dislikes AS (
-            SELECT s.SongName, s.SongID
-            FROM Song s
-                JOIN UserReviewOnSong ur ON s.SongID = ur.SongID
-                JOIN User u ON ur.UserID = u.ID
-            WHERE u.BirthYear >= {start_year}
-                AND u.BirthYear <= {end_year}
-                AND ur.IsLike = FALSE
-        ),
-        Diff AS (
-            SELECT l.SongName, l.SongID
-            FROM Likes l
-            EXCEPT ALL
-            SELECT d.SongName, d.SongID
-            FROM Dislikes d
-        )
-        SELECT d.SongName, d.SongID,
-            COUNT(*) AS Popularity
-        FROM Diff d
-        GROUP BY d.SongName, d.SongID
-        ORDER BY COUNT(*) DESC
-        LIMIT 10;
+    SELECT Song.SongID
+    FROM Song
+        JOIN UserReviewOnSong ON Song.SongID = UserReviewOnSong.SongID
+        JOIN User ON UserReviewOnSong.UserID = User.ID
+    WHERE BirthYear >= {start_year}
+        AND BirthYear <= {end_year}
+        AND IsLike = TRUE
+),
+Dislikes AS (
+    SELECT Song.SongID
+    FROM Song
+        JOIN UserReviewOnSong ON Song.SongID = UserReviewOnSong.SongID
+        JOIN User ON UserReviewOnSong.UserID = User.ID
+    WHERE BirthYear >= {start_year}
+        AND BirthYear <= 2010
+        AND IsLike = {end_year}
+),
+Diff AS (
+    SELECT SongID
+    FROM Likes
+    EXCEPT ALL
+    SELECT *
+    FROM Dislikes
+)
+SELECT SongName,
+    COUNT(*)
+FROM Diff
+JOIN SONG on Diff.SongID = Song.SongID
+GROUP BY Diff.SongID
+ORDER BY COUNT(*) DESC
+LIMIT 10;
         """
 
         conn = get_connector()
