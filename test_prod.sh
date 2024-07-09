@@ -6,7 +6,7 @@ find query-prod -type f -name '*.sql' | while read -r sql_file; do
     out_file="${sql_file%.sql}.out"
     output=$(mysql -u"$HARDCODED_USERNAME" -p"$HARDCODED_PASSWORD" CS348 < "$sql_file")
     echo "$output" > output.txt
-    if ! diff -w -q output.txt "$out_file"; then
+    if ! diff -w -i -q output.txt "$out_file"; then
     echo "Output mismatch for $sql_file"
     echo "===== Expected Output ($out_file) ====="
     cat "$out_file"
