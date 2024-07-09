@@ -70,21 +70,6 @@ END;
 
 DELIMITER ;
 
-DELIMITER //
-
-CREATE TRIGGER UpdateSingerSongCount
-AFTER INSERT ON Song
-FOR EACH ROW
-BEGIN 
-    UPDATE Singer
-    SET SongProduced = SongProduced + 1
-    WHERE SingerID = NEW.SingerID;
-END;
-
-//
-
-DELIMITER ;
-
 
 CREATE TABLE UserReviewOnSinger (
     Timestamp TIMESTAMP,
