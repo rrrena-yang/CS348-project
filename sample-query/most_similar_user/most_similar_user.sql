@@ -17,6 +17,8 @@ CommonLikes AS (
 )
 SELECT * FROM CommonLikes;
 
+
+
 -- CommonLikes AS (
 --     SELECT SongName
 --     FROM UserLikes
@@ -24,3 +26,4 @@ SELECT * FROM CommonLikes;
 --     SELECT SongName
 --     FROM OtherUserLikes
 -- )
+

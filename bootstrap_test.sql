@@ -54,6 +54,18 @@ INSERT INTO Song (SongID, SingerID, SongName, PublishDate, Category, TotalReview
 
 
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 4, 1, TRUE, 'Johns review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 5, 1, TRUE, 'Janes review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 6, 1, FALSE, 'Hater review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 8, 1, TRUE, 'liker review');
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
+    ('2021-01-02', 7, 1, TRUE, 'Joes review');
+
+
+INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-01', 1, 1, TRUE, 'Yoop review');
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-03', 1, 2, TRUE, 'PM Review');
@@ -83,24 +95,3 @@ SELECT * FROM Song;
 UPDATE UserReviewOnSong SET IsLike = TRUE WHERE UserID = 3 AND SongID = 1;
 
 SELECT * FROM Song;
-
-
-WITH UserLikes AS (
-    SELECT SongID
-    FROM UserReviewOnSong
-    WHERE UserID = 1 AND IsLike = TRUE
-), 
-OtherUserLikes AS (
-    SELECT UserID, SongID
-    FROM UserReviewOnSong
-    WHERE UserID != 1 AND IsLike = TRUE
-),
-CommonLikes AS (
-    SELECT ou.UserID
-    FROM UserLikes ul
-    JOIN OtherUserLikes ou ON ul.SongID = ou.SongID
-    GROUP BY ou.UserID 
-    HAVING COUNT(*) > 3
-)
-SELECT * FROM CommonLikes;
-
