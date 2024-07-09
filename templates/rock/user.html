@@ -62,7 +62,6 @@
                                         <li> <a href="{{ url_for('all_songs') }}">Song</a> </li>
                                         <li> <a href="{{ url_for('all_singers') }}">Singer</a> </li>
                                         <!--<li> <a href="contact.html">Contact</a> </li>-->
-                                        <li> <a href="{{ url_for('login') }}">Login</a> </li>
                                         <li> <a href= "{{ url_for('user_info') }}">User</a> </li>
                                     </ul>
                                 </nav>
@@ -109,6 +108,11 @@
                     <p>No reviews found.</p>
                 {% endif %}
             </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text"><a href="{{ url_for('logout') }}">Logout</a></p>
         </div>
     </div>
 

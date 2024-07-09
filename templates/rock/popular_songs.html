@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popular Songs by Age Group</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Find Top 3 Popular Songs in an Age Group</h1>
+        <form method="POST" action="{{ url_for('r9.popular_song_age_group') }}">
+            <div class="form-group">
+                <label for="startYear">Start Year:</label>
+                <input type="number" class="form-control" id="startYear" name="startYear" required>
+            </div>
+            <div class="form-group">
+                <label for="endYear">End Year:</label>
+                <input type="number" class="form-control" id="endYear" name="endYear" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if songs is not none %}
+            <h2 class="mt-5">Age Group Year:{{ start_year }} - Year:{{ end_year }}</h2>
+            {% if songs %}
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>Song Name</th>
+                            <th>Popularity (Likes - Dislikes)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for song in songs %}
+                            <tr>
+                                <td><a href="{{ url_for('song_detail', song_id=song.song_id) }}">{{ song.songname }}</a></td>
+                                <td>{{ song.popular }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="mt-3">No results found for the specified age group.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

@@ -13,6 +13,7 @@ app.register_blueprint(r7)
 app.register_blueprint(r8)
 app.register_blueprint(r9)
 app.register_blueprint(r10)
+
 conn = get_connector()
 
 app.secret_key = "030927"
@@ -60,11 +61,12 @@ def hello():
     return jsonify(message="Hello, World!")
 
 
+# Signup Route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
+        password = hash(request.form['password'])
         name = request.form.get('name')
         birthyear = request.form.get('birthyear')
         gender = request.form.get('gender')
@@ -88,27 +90,35 @@ def signup():
 
     return render_template('sign_up.html')
 
-
+# Login Route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
-        cursor = conn.cursor()
+        password = hash(request.form['password'])
+        cursor = conn.cursor(buffered=True)
 
         cursor.execute("SELECT ID, UserPassword FROM User WHERE UserName = %s", (username,))
         user = cursor.fetchone()
-        cursor.close()
 
         if user and user[1] == password:
             session['user_id'] = user[0]
             flash('Login successful!', 'success')
+            cursor.close()
             return redirect(url_for('user_info'))
         else:
+            cursor.close()
             flash('Invalid username or password', 'danger')
 
     return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('index'))
+
+# User Information Route
 @app.route('/user_info')
 def user_info():
     if 'user_id' not in session:
@@ -120,7 +130,7 @@ def user_info():
 
     cursor.execute("SELECT * FROM User WHERE ID = %s", (user_id,))
     user = cursor.fetchone()
-    
+
     cursor.execute("""
         SELECT s.SongName AS SongName, si.Name AS SingerName, ur.IsLike, ur.Review
         FROM UserReviewOnSong ur 

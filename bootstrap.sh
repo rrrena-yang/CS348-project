@@ -52,8 +52,8 @@ else
     exit 1
 fi
 
-# Run the SQL script bootstrap.sql located relative to the script
-mysql -u "$username" CS348 < "$SCRIPT_DIR/bootstrap.sql"
+# mysql -u "$username" CS348 < "$SCRIPT_DIR/bootstrap.sql"
+python3 "$SCRIPT_DIR/bootstrap_prod.py"
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then
