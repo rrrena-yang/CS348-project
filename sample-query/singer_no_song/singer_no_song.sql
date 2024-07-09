@@ -1,5 +1,5 @@
 WITH SingerWithSong AS (
-    SELECT SingerID
+    SELECT Singer.SingerID
     FROM Singer
     RIGHT OUTER JOIN Song ON Singer.SingerID = Song.SingerID
     WHERE Singer.SingerID IS NOT NULL

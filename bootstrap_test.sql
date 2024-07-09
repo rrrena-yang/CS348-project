@@ -95,17 +95,3 @@ SELECT * FROM Song;
 UPDATE UserReviewOnSong SET IsLike = TRUE WHERE UserID = 3 AND SongID = 1;
 
 SELECT * FROM Song;
-
-
-WITH SingerWithSong AS (
-    SELECT Singer.SingerID
-    FROM Singer
-    RIGHT OUTER JOIN Song ON Singer.SingerID = Song.SingerID
-    WHERE Singer.SingerID IS NOT NULL
-)
-SELECT SingerID
-FROM Singer
-WHERE SingerID NOT IN (
-    SELECT SingerID
-    FROM SingerWithSong
-);
