@@ -1,5 +1,5 @@
 WITH Likes AS (
-    SELECT SongName
+    SELECT Song.SongID
     FROM Song
         JOIN UserReviewOnSong ON Song.SongID = UserReviewOnSong.SongID
         JOIN User ON UserReviewOnSong.UserID = User.ID
@@ -8,7 +8,7 @@ WITH Likes AS (
         AND IsLike = TRUE
 ),
 Dislikes AS (
-    SELECT SongName
+    SELECT Song.SongID
     FROM Song
         JOIN UserReviewOnSong ON Song.SongID = UserReviewOnSong.SongID
         JOIN User ON UserReviewOnSong.UserID = User.ID
@@ -17,7 +17,7 @@ Dislikes AS (
         AND IsLike = FALSE
 ),
 Diff AS (
-    SELECT SongName
+    SELECT SongID
     FROM Likes
     EXCEPT ALL
     SELECT *
@@ -26,6 +26,7 @@ Diff AS (
 SELECT SongName,
     COUNT(*)
 FROM Diff
-GROUP BY SongName
+JOIN SONG on Diff.SongID = Song.SongID
+GROUP BY Diff.SongID
 ORDER BY COUNT(*) DESC
 LIMIT 10;
