@@ -52,8 +52,8 @@ else
     exit 1
 fi
 
-# mysql -u "$username" CS348 < "$SCRIPT_DIR/bootstrap.sql"
-python3 "$SCRIPT_DIR/bootstrap_prod.py"
+mysql -u "$username" CS348 < "$SCRIPT_DIR/bootstrap.sql"
+# python3 "$SCRIPT_DIR/bootstrap_prod.py"
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then
