@@ -1,12 +1,12 @@
 WITH UserLikes AS (
     SELECT SongID
     FROM UserReviewOnSong
-    WHERE UserID = 1000000 AND IsLike = TRUE
+    WHERE UserID = 99999 AND IsLike = TRUE
 ), 
 OtherUserLikes AS (
     SELECT UserID, SongID
     FROM UserReviewOnSong
-    WHERE UserID != 1000000 AND IsLike = TRUE
+    WHERE UserID != 99999 AND IsLike = TRUE
 ),
 CommonLikes AS (
     SELECT ou.UserID
