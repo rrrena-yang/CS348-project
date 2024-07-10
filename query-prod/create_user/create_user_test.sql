@@ -1,1 +1,0 @@
-SELECT * FROM User WHERE id = 1000000;
