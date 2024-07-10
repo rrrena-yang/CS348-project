@@ -42,4 +42,3 @@ SELECT Liked, Disliked FROM Song WHERE SongID = 6958;
 --         WHERE SongID = NEW.SongID;
 --     END IF;
 -- END;
-

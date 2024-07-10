@@ -1,6 +1,8 @@
 HARDCODED_USERNAME="root"
 HARDCODED_PASSWORD="MySQL030927"
 
+./bootstrap.sh
+
 find query-prod -type f -name '*.sql' | while read -r sql_file; do
     base_name=$(basename "$sql_file" .sql)
     out_file="${sql_file%.sql}.out"
