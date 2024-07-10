@@ -23,7 +23,7 @@ jobs:
           -e MYSQL_CHARSET=utf8mb4 \
           -e MYSQL_COLLATION=utf8mb4_unicode_ci \
           -v ${{ github.workspace }}/my.cnf:/etc/mysql/conf.d/my.cnf:ro \
-          mysql:latest
+          mysql:8.0.38
 
     - name: Wait for MySQL container to be healthy
       run: |

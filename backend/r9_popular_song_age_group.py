@@ -39,7 +39,7 @@ Diff AS (
     SELECT *
     FROM Dislikes
 )
-SELECT SongName,
+SELECT SongName, SongID,
     COUNT(*)
 FROM Diff
 GROUP BY SongID, SongName
