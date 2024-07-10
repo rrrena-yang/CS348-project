@@ -1,73 +1,73 @@
-# name: Run Prod Data Tests
+name: Run Prod Data Tests
 
-# on: [pull_request]
+on: [pull_request]
 
-# jobs:
-#   test:
-#     runs-on: ubuntu-latest
+jobs:
+  test:
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - name: Checkout repository
-#       uses: actions/checkout@v2
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-#     - name: Start MySQL container
-#       run: |
-#         docker run --name mysql-container -d \
-#           -p 3306:3306 \
-#           --health-cmd="mysqladmin ping --silent" \
-#           --health-interval=10s \
-#           --health-timeout=5s \
-#           --health-retries=5 \
-#           -e MYSQL_ROOT_PASSWORD=MySQL030927 \
-#           -e MYSQL_DATABASE=CS348 \
-#           -e MYSQL_CHARSET=utf8mb4 \
-#           -e MYSQL_COLLATION=utf8mb4_unicode_ci \
-#           -v ${{ github.workspace }}/my.cnf:/etc/mysql/conf.d/my.cnf:ro \
-#           mysql:latest
+    - name: Start MySQL container
+      run: |
+        docker run --name mysql-container -d \
+          -p 3306:3306 \
+          --health-cmd="mysqladmin ping --silent" \
+          --health-interval=10s \
+          --health-timeout=5s \
+          --health-retries=5 \
+          -e MYSQL_ROOT_PASSWORD=MySQL030927 \
+          -e MYSQL_DATABASE=CS348 \
+          -e MYSQL_CHARSET=utf8mb4 \
+          -e MYSQL_COLLATION=utf8mb4_unicode_ci \
+          -v ${{ github.workspace }}/my.cnf:/etc/mysql/conf.d/my.cnf:ro \
+          mysql:latest
 
-#     - name: Wait for MySQL container to be healthy
-#       run: |
-#         docker inspect mysql-container --format='{{.State.Health.Status}}'
-#         for i in {30..0}; do
-#           docker inspect -f '{{.State.Health.Status}}' mysql-container | grep -q healthy && break
-#           echo 'Waiting for MySQL to be healthy...'
-#           sleep 1
-#         done
-#         docker inspect -f '{{.State.Health.Status}}' mysql-container
+    - name: Wait for MySQL container to be healthy
+      run: |
+        docker inspect mysql-container --format='{{.State.Health.Status}}'
+        for i in {30..0}; do
+          docker inspect -f '{{.State.Health.Status}}' mysql-container | grep -q healthy && break
+          echo 'Waiting for MySQL to be healthy...'
+          sleep 1
+        done
+        docker inspect -f '{{.State.Health.Status}}' mysql-container
 
-#     - name: Check MySQL container logs
-#       run: docker logs mysql-container
+    - name: Check MySQL container logs
+      run: docker logs mysql-container
 
-#     - name: Check my.cnf in MySQL container
-#       run: |
-#         docker exec -i mysql-container cat /etc/mysql/conf.d/my.cnf
+    - name: Check my.cnf in MySQL container
+      run: |
+        docker exec -i mysql-container cat /etc/mysql/conf.d/my.cnf
 
-#     - name: Copy scripts to MySQL container
-#       run: |
-#         docker cp bootstrap.sh mysql-container:/root/bootstrap.sh
-#         docker cp create_table.sql mysql-container:/root/create_table.sql
-#         docker cp bootstrap.sql mysql-container:/root/bootstrap.sql
+    - name: Copy scripts to MySQL container
+      run: |
+        docker cp bootstrap.sh mysql-container:/root/bootstrap.sh
+        docker cp create_table.sql mysql-container:/root/create_table.sql
+        docker cp bootstrap.sql mysql-container:/root/bootstrap.sql
 
-#     - name: Run bootstrap.sh inside MySQL container
-#       run: |
-#         docker exec -i mysql-container sh -c 'chmod +x /root/bootstrap.sh && /root/bootstrap.sh'
+    - name: Run bootstrap.sh inside MySQL container
+      run: |
+        docker exec -i mysql-container sh -c 'chmod +x /root/bootstrap.sh && /root/bootstrap.sh'
 
-#     - name: Run sample queries and check outputs
-#       run: |
-#         find query-prod -type f -name '*.sql' | while read -r sql_file; do
-#           base_name=$(basename "$sql_file" .sql)
-#           out_file="${sql_file%.sql}.out"
-#           output=$(docker exec -i mysql-container mysql -uroot -p"MySQL030927" CS348 < "$sql_file")
-#           echo "$output" > output.txt
-#           if ! diff -w -q output.txt "$out_file"; then
-#             echo "Output mismatch for $sql_file"
-#             echo "===== Expected Output ($out_file) ====="
-#             cat "$out_file"
-#             echo "===== Actual Output ====="
-#             cat output.txt
-#             exit 1
-#           fi
-#         done
+    - name: Run sample queries and check outputs
+      run: |
+        find query-prod -type f -name '*.sql' | while read -r sql_file; do
+          base_name=$(basename "$sql_file" .sql)
+          out_file="${sql_file%.sql}.out"
+          output=$(docker exec -i mysql-container mysql -uroot -p"MySQL030927" CS348 < "$sql_file")
+          echo "$output" > output.txt
+          if ! diff -w -q output.txt "$out_file"; then
+            echo "Output mismatch for $sql_file"
+            echo "===== Expected Output ($out_file) ====="
+            cat "$out_file"
+            echo "===== Actual Output ====="
+            cat output.txt
+            exit 1
+          fi
+        done
 
-#     - name: Stop MySQL container
-#       run: docker stop mysql-container
+    - name: Stop MySQL container
+      run: docker stop mysql-container
