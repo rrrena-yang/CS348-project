@@ -13,14 +13,14 @@ def popular_song_age_group():
         start_year = request.form.get('startYear', 0)
         end_year = request.form.get('endYear', 2999)
         
-        query = f"""
+        query = """
         WITH Likes AS (
     SELECT SongName, Song.SongID
     FROM Song
         JOIN UserReviewOnSong ON Song.SongID = UserReviewOnSong.SongID
         JOIN User ON UserReviewOnSong.UserID = User.ID
-    WHERE BirthYear >= {start_year}
-        AND BirthYear <= {end_year}
+    WHERE BirthYear >= %s
+        AND BirthYear <= %s
         AND IsLike = TRUE
 ),
 Dislikes AS (
@@ -28,8 +28,8 @@ Dislikes AS (
     FROM Song
         JOIN UserReviewOnSong ON Song.SongID = UserReviewOnSong.SongID
         JOIN User ON UserReviewOnSong.UserID = User.ID
-    WHERE BirthYear >= {start_year}
-        AND BirthYear <= {end_year}
+    WHERE BirthYear >= %s
+        AND BirthYear <= %s
         AND IsLike = FALSE
 ),
 Diff AS (
@@ -49,7 +49,7 @@ LIMIT 10;
 
         conn = get_connector()
         cursor = conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query, (start_year, end_year, start_year, end_year))
         songs = cursor.fetchall()
         conn.close()
         songs = [{"songname": song[0], "song_id": song[1], "popular": song[2]} for song in songs]

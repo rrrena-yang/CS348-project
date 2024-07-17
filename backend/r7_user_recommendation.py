@@ -6,7 +6,7 @@ r7 = Blueprint('r7', __name__)
 
 @r7.route('/api/<int:user_id>/rec', methods=['GET'])
 def user_recommendation(user_id):
-    query = f"""
+    query = """
         WITH UserProfile(UserID, Category, AlbumID, SingerID, LikeCount) AS (
     SELECT 
         urs.UserID,
@@ -17,7 +17,7 @@ def user_recommendation(user_id):
     FROM 
         UserPreferences urs
     WHERE 
-        urs.UserID = {user_id}
+        urs.UserID = %s
     ORDER BY 
         LikeCount DESC
     LIMIT 3
@@ -38,7 +38,7 @@ LIMIT 10;
         """
     conn = get_connector()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute(query)
+    cursor.execute(query, (user_id))
     rows = cursor.fetchall()
     if not rows:
         print(f"No recommendations found for user_id: {user_id}")

@@ -10,12 +10,6 @@ config = {
 
 def get_connector():
     conn = mysql.connector.connect(**config)
-    cursor = conn.cursor()
-
-    query = "SELECT * FROM HelloWorld"
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    for row in rows:
-        print(row[0])
+    conn.autocommit = True
     return conn
 
