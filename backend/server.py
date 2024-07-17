@@ -224,9 +224,9 @@ def get_song_popularity(song_id):
     if not song_id:
         raise Exception("No song_id provided")
     print(song_id)
-    query = f"SELECT (Liked + Disliked) AS TotalLikes FROM Song WHERE SongID = {song_id};"
+    query = f"SELECT (Liked + Disliked) AS TotalLikes FROM Song WHERE SongID = %s;"
     cursor = conn.cursor()
-    cursor.execute(query)
+    cursor.execute(query, (song_id))
     rows = cursor.fetchall()
     if len(rows) == 0:
         raise Exception(f"No song with song_id {song_id}")
@@ -249,9 +249,9 @@ def search_for_song_reviews(song_id):
        raise Exception("No song_id provided")
 
 
-   query = f"SELECT Review FROM UserReviewOnSong WHERE SongID = {song_id} "
+   query = f"SELECT Review FROM UserReviewOnSong WHERE SongID = %s "
    cursor = conn.cursor()
-   cursor.execute(query)
+   cursor.execute(query, (song_id))
    rows = cursor.fetchall()
    if len(rows) == 0:
        raise Exception(f"No reviews with song_id {song_id}")
