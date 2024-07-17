@@ -10,6 +10,6 @@ config = {
 
 def get_connector():
     conn = mysql.connector.connect(**config)
-    cursor = conn.cursor()
+    conn.autocommit = True
     return conn
 
