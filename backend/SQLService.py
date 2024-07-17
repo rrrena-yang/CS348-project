@@ -5,7 +5,7 @@ config = {
     'user': "root",
     'password': 'MySQL030927',
     'host': 'localhost',
-    'database': 'CS348_TEST'
+    'database': 'CS348'
 }
 
 def get_connector():
