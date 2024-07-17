@@ -6,9 +6,6 @@ r7 = Blueprint('r7', __name__)
 
 @r7.route('/api/<int:user_id>/rec', methods=['GET'])
 def user_recommendation(user_id):
-    file_path = '../sample-query/user_recommendation/user_rec.txt'
-    with open(file_path, 'r') as file:
-        file_content = file.read()
     query = """
         WITH UserProfile(UserID, Category, AlbumID, SingerID, LikeCount) AS (
     SELECT 
@@ -40,7 +37,12 @@ WHERE
 LIMIT 10;
         """
     conn = get_connector()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
     cursor.execute(query, (user_id))
     rows = cursor.fetchall()
+    if not rows:
+        print(f"No recommendations found for user_id: {user_id}")
+    else:
+        for row in rows:
+            print(f"Recommended Song: {row['SongName']}")
     return render_template('user_recommendation.html', songs=rows)
