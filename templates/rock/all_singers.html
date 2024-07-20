@@ -73,7 +73,7 @@
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">{{ singer.Name }}</h5>
-                            <p class="card-text">Age: {{ singer.Age }}</p>
+                            <p class="card-text">Birth Year: {{ singer.BirthYear }}</p>
                             <p class="card-text">Country: {{ singer.Country }}</p>
                             <a href="{{ url_for('singer_detail', singer_id=singer.SingerID) }}" class="btn btn-danger">View Details</a>
                         </div>
