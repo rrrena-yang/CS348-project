@@ -66,7 +66,7 @@ def hello():
 def signup():
     if request.method == 'POST':
         username = request.form['username']
-        password = hash(request.form['password'])
+        password = request.form['password']
         name = request.form.get('name')
         birthyear = request.form.get('birthyear')
         gender = request.form.get('gender')
@@ -95,16 +95,19 @@ def signup():
 def login():
     if request.method == 'POST':
         username = request.form['username']
-        password = hash(request.form['password'])
+        print(request.form['password'])
+        password = request.form['password']
+        print(password)
         cursor = conn.cursor(buffered=True)
 
         cursor.execute("SELECT ID, UserPassword FROM User WHERE UserName = %s", (username,))
         user = cursor.fetchone()
-
+        print(user)
         if user and user[1] == password:
             session['user_id'] = user[0]
             flash('Login successful!', 'success')
             cursor.close()
+            print("asdfg")
             return redirect(url_for('user_info'))
         else:
             cursor.close()
@@ -195,7 +198,7 @@ def song_detail(song_id):
         conn.commit()
         flash('Review submitted successfully', 'success')
     
-    cursor.execute("SELECT * FROM Song WHERE SongID = %s", (song_id,))
+    cursor.execute("SELECT * FROM Song JOIN Singer singer ON song.singerID = singer.singerID WHERE SongID = %s", (song_id,))
     song = cursor.fetchone()
 
     cursor.execute("""
@@ -216,7 +219,7 @@ def song_data(song_id):
     liked = request.args.get('liked')
     disliked = request.args.get('disliked')
     total_review_amount = request.args.get('total_review_amount')
-    popularity = int(disliked) + int(liked)
+    popularity = int(liked) - int(disliked)
     return render_template('data.html', liked = liked, disliked = disliked, total_review_amount =  total_review_amount, popularity = popularity )
 
 @app.route('/api/popularity/<int:song_id>', methods=['GET'])
@@ -224,9 +227,9 @@ def get_song_popularity(song_id):
     if not song_id:
         raise Exception("No song_id provided")
     print(song_id)
-    query = f"SELECT (Liked + Disliked) AS TotalLikes FROM Song WHERE SongID = {song_id};"
+    query = f"SELECT (Liked - Disliked) AS TotalLikes FROM Song WHERE SongID = %s;"
     cursor = conn.cursor()
-    cursor.execute(query)
+    cursor.execute(query, (song_id))
     rows = cursor.fetchall()
     if len(rows) == 0:
         raise Exception(f"No song with song_id {song_id}")
@@ -249,9 +252,9 @@ def search_for_song_reviews(song_id):
        raise Exception("No song_id provided")
 
 
-   query = f"SELECT Review FROM UserReviewOnSong WHERE SongID = {song_id} "
+   query = f"SELECT Review FROM UserReviewOnSong WHERE SongID = %s "
    cursor = conn.cursor()
-   cursor.execute(query)
+   cursor.execute(query, (song_id))
    rows = cursor.fetchall()
    if len(rows) == 0:
        raise Exception(f"No reviews with song_id {song_id}")

@@ -13,41 +13,43 @@ def popular_song_age_group():
         start_year = request.form.get('startYear', 0)
         end_year = request.form.get('endYear', 2999)
         
-        query = f"""
+        query = """
         WITH Likes AS (
-            SELECT s.SongName, s.SongID
-            FROM Song s
-                JOIN UserReviewOnSong ur ON s.SongID = ur.SongID
-                JOIN User u ON ur.UserID = u.ID
-            WHERE u.BirthYear >= {start_year}
-                AND u.BirthYear <= {end_year}
-                AND ur.IsLike = TRUE
-        ),
-        Dislikes AS (
-            SELECT s.SongName, s.SongID
-            FROM Song s
-                JOIN UserReviewOnSong ur ON s.SongID = ur.SongID
-                JOIN User u ON ur.UserID = u.ID
-            WHERE u.BirthYear >= {start_year}
-                AND u.BirthYear <= {end_year}
-                AND ur.IsLike = FALSE
-        ),
-        Diff AS (
-            SELECT l.SongName, l.SongID
-            FROM Likes l
-            EXCEPT ALL
-            SELECT d.SongName, d.SongID
-            FROM Dislikes d
-        )
-        SELECT d.SongName, d.SongID,
-            COUNT(*) AS Popularity
-        FROM Diff d
-        GROUP BY d.SongName, d.SongID;
+    SELECT SongName, Song.SongID
+    FROM Song
+        JOIN UserReviewOnSong ON Song.SongID = UserReviewOnSong.SongID
+        JOIN User ON UserReviewOnSong.UserID = User.ID
+    WHERE BirthYear >= %s
+        AND BirthYear <= %s
+        AND IsLike = TRUE
+),
+Dislikes AS (
+    SELECT SongName, Song.SongID
+    FROM Song
+        JOIN UserReviewOnSong ON Song.SongID = UserReviewOnSong.SongID
+        JOIN User ON UserReviewOnSong.UserID = User.ID
+    WHERE BirthYear >= %s
+        AND BirthYear <= %s
+        AND IsLike = FALSE
+),
+Diff AS (
+    SELECT SongName, SongID
+    FROM Likes
+    EXCEPT ALL
+    SELECT *
+    FROM Dislikes
+)
+SELECT SongName, SongID,
+    COUNT(*)
+FROM Diff
+GROUP BY SongID, SongName
+ORDER BY COUNT(*) DESC, SongName
+LIMIT 10;
         """
 
         conn = get_connector()
         cursor = conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query, (start_year, end_year, start_year, end_year))
         songs = cursor.fetchall()
         conn.close()
         songs = [{"songname": song[0], "song_id": song[1], "popular": song[2]} for song in songs]

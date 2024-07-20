@@ -38,7 +38,7 @@ DROP DATABASE IF EXISTS CS348;
 CREATE DATABASE CS348;
 "
 
-mysql -u "$username" -e "$sql_commands"
+mysql -u "$username" -p"$HARDCODED_PASSWORD" -e "$sql_commands"
 
 # Run the SQL script create_table.sql located relative to the script
 mysql -u "$username" CS348 < "$SCRIPT_DIR/create_table.sql"

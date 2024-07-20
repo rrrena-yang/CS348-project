@@ -8,4 +8,5 @@ pyvenv.cfg
 backend/__pycache__/*
 venv/
 output.txt
+generate_tests.sh
 
