@@ -66,7 +66,7 @@ def hello():
 def signup():
     if request.method == 'POST':
         username = request.form['username']
-        password = hash(request.form['password'])
+        password = request.form['password']
         name = request.form.get('name')
         birthyear = request.form.get('birthyear')
         gender = request.form.get('gender')
@@ -95,16 +95,19 @@ def signup():
 def login():
     if request.method == 'POST':
         username = request.form['username']
-        password = hash(request.form['password'])
+        print(request.form['password'])
+        password = request.form['password']
+        print(password)
         cursor = conn.cursor(buffered=True)
 
         cursor.execute("SELECT ID, UserPassword FROM User WHERE UserName = %s", (username,))
         user = cursor.fetchone()
-
+        print(user)
         if user and user[1] == password:
             session['user_id'] = user[0]
             flash('Login successful!', 'success')
             cursor.close()
+            print("asdfg")
             return redirect(url_for('user_info'))
         else:
             cursor.close()

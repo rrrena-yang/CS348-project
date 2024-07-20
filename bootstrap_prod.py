@@ -152,7 +152,7 @@ for i in range(100000):
         name = fake.name()
         birth_year = fake.year()
         username = fake.user_name()
-        password = hash(fake.password())
+        password = fake.password()
         gender = fake.random_element(elements=('Male', 'Female'))
         country = fake.country()
         query = "INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear, Gender, Location) VALUES (%s, %s, %s, %s, %s, %s, %s)"
