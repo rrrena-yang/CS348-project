@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Recommendations</title>
+    <title>Most Popular Song With Unknown Singer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">User Recommendations</h1>
+        <h1 class="mt-5">Most Popular Song With Unknown Singer</h1>
         {% if songs %}
             <div class="row">
                 {% for song in songs %}
@@ -16,7 +16,6 @@
                         <div class="card mb-4 shadow-sm">
                             <div class="card-body">
                                 <td><a href="{{ url_for('song_detail', song_id=song[0]) }}">{{ song[1] }}</a></td>
-                                <p class="card-text">Category: {{ song[2] }}</p>
                             </div>
                         </div>
                     </div>
