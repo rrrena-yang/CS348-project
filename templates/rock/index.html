@@ -89,7 +89,6 @@
             <div class="container">
                 <div class="text-bg relative">
                     <h1>RATE ME<br><span class="Perfect">Pick Your Favourtie</span><br>Welcome To The Music World</h1>
-                    <p>More Description Here:</p>
                 </div>
             </div>
         </div>
@@ -119,9 +118,11 @@
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                     <div class="for-box">
-                        <i><img src="{{ url_for('static', filename='icon/icon3.png') }}?v=1" alt="icon" /></i>
-                        <h3>Music Playlist</h3>
-                        <p>It is a long established fact that a reader will be distracted by the readable </p>
+                        <a href="{{ url_for('r10.popular_song_unknown_singer') }}">
+                            <i><img src="{{ url_for('static', filename='icon/icon3.png') }}?v=1" alt="icon" /></i>
+                            <h3>Most Popular Song with the unkonwn singer</h3>
+                            <p>Some singers didn't leave their name</p>
+                        </a>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">

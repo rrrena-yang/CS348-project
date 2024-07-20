@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Popular Songs with Unknown Singer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Most Popular Songs with Unknown Singer</h1>
+    {% if songs %}
+        <div class="row">
+            {% for song in songs %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ song.SongName }}</h3>
+                            <p class="card-text">Category: {{ song.Category }}</p>
+                            <p class="card-text">Album ID: {{ song.AlbumID }}</p>
+                            <p class="card-text">Liked: {{ song.Liked }}</p>
+                            <p class="card-text">Disliked: {{ song.Disliked }}</p>
+                            <p class="card-text">Total Reviews: {{ song.TotalReviewAmount }}</p>
+                            <a href="{{ url_for('song_detail', song_id=song.SongID) }}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No popular songs with unknown singer found.</p>
+    {% endif %}
+</div>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

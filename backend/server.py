@@ -95,22 +95,17 @@ def signup():
 def login():
     if request.method == 'POST':
         username = request.form['username']
-        print(request.form['password'])
         password = request.form['password']
-        print(password)
         cursor = conn.cursor(buffered=True)
 
         cursor.execute("SELECT ID, UserPassword FROM User WHERE UserName = %s", (username,))
         user = cursor.fetchone()
-        print(user)
         if user and user[1] == password:
             session['user_id'] = user[0]
             flash('Login successful!', 'success')
-            cursor.close()
-            print("asdfg")
             return redirect(url_for('user_info'))
         else:
-            cursor.close()
+            flash('Invalid username, email, or password', 'danger')
             flash('Invalid username or password', 'danger')
 
     return render_template('login.html')
@@ -121,7 +116,6 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
 
-# User Information Route
 @app.route('/user_info')
 def user_info():
     if 'user_id' not in session:
@@ -131,9 +125,11 @@ def user_info():
     user_id = session['user_id']
     cursor = conn.cursor(dictionary=True)
 
+    # Fetch user details
     cursor.execute("SELECT * FROM User WHERE ID = %s", (user_id,))
     user = cursor.fetchone()
-
+    
+    # Fetch user reviews
     cursor.execute("""
         SELECT s.SongName AS SongName, si.Name AS SingerName, ur.IsLike, ur.Review
         FROM UserReviewOnSong ur 
@@ -142,10 +138,39 @@ def user_info():
         WHERE ur.UserID = %s
     """, (user_id,))
     reviews = cursor.fetchall()
-
+    
+    # Fetch common likes
+    cursor.execute(f"""
+        WITH UserLikes AS (
+            SELECT SongID
+            FROM UserReviewOnSong
+            WHERE UserID = {user_id} AND IsLike = TRUE
+        ),
+        OtherUserLikes AS (
+            SELECT UserID, SongID
+            FROM UserReviewOnSong
+            WHERE UserID != {user_id} AND IsLike = TRUE
+        ),
+        CommonLikes AS (
+            SELECT ou.UserID
+            FROM UserLikes ul
+            JOIN OtherUserLikes ou ON ul.SongID = ou.SongID
+            GROUP BY ou.UserID
+            HAVING COUNT(*) > 3
+        )
+        SELECT * from CommonLikes;
+    """)
+    common_likes = cursor.fetchall()
+    if common_likes :
+         print("hhhh")
+    else:
+        print("no common_likes ")
+    print(common_likes)
+    
     cursor.close()
 
-    return render_template('user.html', user=user, reviews=reviews)
+    return render_template('user.html', user=user, reviews=reviews, common_likes=common_likes)
+
 
 
 
