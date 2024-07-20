@@ -80,12 +80,12 @@ UNION
 SELECT * FROM MostSimilarUserLikeSongs msls;
         """
     conn = get_connector()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute(query, (user_id))
+    cursor = conn.cursor()
+    cursor.execute(query, (user_id, user_id, user_id))
     rows = cursor.fetchall()
     if not rows:
         print(f"No recommendations found for user_id: {user_id}")
     else:
         for row in rows:
-            print(f"Recommended Song: {row['SongName']}")
+            print(f"Recommended Song: {row}")
     return render_template('user_recommendation.html', songs=rows)
