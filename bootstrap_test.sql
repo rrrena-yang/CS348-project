@@ -15,11 +15,11 @@ INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (3,
 INSERT INTO Singer (SingerID, Name, BirthYear, SongProduced, Country) VALUES (10, 'Teacher G', 30, 10, 'USA');
 
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
-    (1, 'password', 'username', 'name', 1999);
+    (1, 'password', 'username0', 'name', 1999);
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
-    (2, 'password', 'username', 'name', 1999);
+    (2, 'password', 'username1', 'name', 1999);
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
-    (3, 'password', 'username', 'name', 1999);
+    (3, 'password', 'username2', 'name', 1999);
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
     (4, 'password', 'John', 'John', 2001);
 INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear)  VALUES 
@@ -90,9 +90,4 @@ INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES
 INSERT INTO UserReviewOnSong (Timestamp, UserID, SongID, IsLike, Review) VALUES 
     ('2021-01-02', 3, 1, FALSE, 'Good Teacher G epic');
 
--- SELECT * FROM Song;
-
--- UPDATE UserReviewOnSong SET IsLike = TRUE WHERE UserID = 3 AND SongID = 1;
-
--- SELECT * FROM Song;
 

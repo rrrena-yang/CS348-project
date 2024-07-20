@@ -2,13 +2,13 @@ SELECT Liked, Disliked FROM Song WHERE SongID = 6958;
 
 INSERT INTO UserReviewOnSong (`Timestamp`, `UserID`, `SongID`, `IsLike`, `Review`)
 VALUES
-	('2023-09-11 04:12:10',1000001,6958,1,'I like the song');
+	('2023-09-11 04:12:10',100,6958,1,'I like the song');
 
 SELECT Liked, Disliked FROM Song WHERE SongID = 6958;
 
 UPDATE UserReviewOnSong
 SET IsLike = 0, Review = 'I dislike the song'
-WHERE UserID = 1000001 AND SongID = 6958;
+WHERE UserID = 100 AND SongID = 6958;
 
 SELECT Liked, Disliked FROM Song WHERE SongID = 6958;
 
