@@ -151,8 +151,8 @@ for i in range(100000):
     try:
         name = fake.name()
         birth_year = fake.year()
-        username = fake.user_name()
-        password = fake.password()
+        username = fake.unique.user_name()
+        password = hash(fake.password())
         gender = fake.random_element(elements=('Male', 'Female'))
         country = fake.country()
         query = "INSERT INTO User (ID, UserPassword, UserName, Name, BirthYear, Gender, Location) VALUES (%s, %s, %s, %s, %s, %s, %s)"
