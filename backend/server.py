@@ -190,13 +190,26 @@ def user_info():
         FROM CommonLikes cl
         JOIN User u ON cl.UserID = u.ID
         JOIN UserReviewOnSong ur ON ur.UserID = cl.UserID
-        JOIN Song s ON ur.SongID = s.SongID;
+        JOIN Song s ON ur.SongID = s.SongID
+        WHERE ur.IsLike = TRUE;
     """)
-    common_likes = cursor.fetchall()
-    print(common_likes)
+    results = cursor.fetchall()
+    
+    # Organize data by user
+    common_likes = {}
+    for row in results:
+        user_id = row['UserID']
+        if user_id not in common_likes:
+            common_likes[user_id] = {
+                "username": row['UserName'],
+                "songs": []
+            }
+        common_likes[user_id]["songs"].append(row['SongName'])
+    
     cursor.close()
 
     return render_template('user.html', user=user, reviews=reviews, common_likes=common_likes)
+
 
 
 
