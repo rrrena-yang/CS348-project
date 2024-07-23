@@ -109,10 +109,31 @@
                 {% endif %}
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <p class="card-text"><a href="{{ url_for('logout') }}">Logout</a></p>
+
+        <h2 class="mt-5">Most Similar User</h2>
+        <div class="card">
+            <div class="card-body">
+                {% if common_likes %}
+                    {% for user_id, user_info in common_likes.items() %}
+                        <div class="mb-3">
+                            <strong>User ID:</strong> {{ user_id }} <strong>Username:</strong> {{ user_info.username }}
+                            <ul>
+                                {% for song in user_info.songs %}
+                                    <li>Song Liked: {{ song }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No users found with common likes.</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text"><a href="{{ url_for('logout') }}">Logout</a></p>
+            </div>
         </div>
     </div>
 

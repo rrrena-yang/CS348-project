@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <!-- Basic Meta Tags -->
     <meta charset="utf-8">
@@ -16,11 +15,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body class="main-layout">
@@ -46,17 +40,16 @@
                                         <li class="active"> <a href="{{ url_for('index') }}">Home</a> </li>
                                         <li> <a href="{{ url_for('all_songs') }}">Song</a> </li>
                                         <li> <a href="{{ url_for('all_singers') }}">Singer</a> </li>
-                                        <!--<li> <a href="contact.html">Contact</a> </li>-->
                                         <li> <a href="{{ url_for('login') }}">Login</a> </li>
-                                        <li> <a href= "{{ url_for('user_info') }}">User</a> </li>
+                                        <li> <a href="{{ url_for('user_info') }}">User</a> </li>
                                     </ul>
                                 </nav>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-                        <form class="search" method="POST" action="{{ url_for('index') }}">
-                            <input class="form-control" type="text" placeholder="Search" name="query" required>
+                        <form class="search" method="POST" action="{{ url_for('search_results') }}">
+                            <input class="form-control" type="text" placeholder="Search by Singer ID" name="query" required>
                             <button type="submit"><img src="{{ url_for('static', filename='images/search_icon.png') }}"></button>
                         </form>
                     </div>
@@ -66,28 +59,35 @@
     </header>
     <!-- Main Content -->
     <div class="container mt-5">
-        <h2>Singer Detail</h2>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ singer.Name }}</h5>
-                <p class="card-text"><strong>Age:</strong> {{ singer.Age }}</p>
-                <p class="card-text"><strong>Country:</strong> {{ singer.Country }}</p>
-            </div>
-        </div>
-        <h3 class="mt-5">Songs by {{ singer.Name }}</h3>
-        <div class="row">
-            {% for song in songs %}
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ song.Name }}</h5>
-                            <p class="card-text">Category: {{ song.Category }}</p>
-                            <a href="{{ url_for('song_detail', song_id=song.SongID) }}" class="btn btn-danger">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% else %}
+            <h2>{{ singer.name }}</h2>
+            <p>Age: {{ singer.age }}</p>
+            <p>Country: {{ singer.country }}</p>
+
+            <h3>Top 3 Categories</h3>
+            {% if categories %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Number of Songs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category, count in categories %}
+                            <tr>
+                                <td>{{ category }}</td>
+                                <td>{{ count }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No categories found for this singer.</p>
+            {% endif %}
+        {% endif %}
     </div>
 
     <!-- Javascript files -->
@@ -114,5 +114,4 @@
         });
     </script>
 </body>
-
 </html>

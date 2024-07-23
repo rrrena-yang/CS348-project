@@ -7,23 +7,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>User Recommendations</h1>
+    <div class="container">
+        <h1 class="mt-5">User Recommendations</h1>
         {% if songs %}
             <div class="row">
                 {% for song in songs %}
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
                             <div class="card-body">
-                                <td><a href="{{ url_for('song_detail', song_id=song.SongID )}}">{{ song.SongName }}</a></td>
-                                <p class="card-text">Category: {{ song.Category }}</p>
+                                <td><a href="{{ url_for('song_detail', song_id=song[0]) }}">{{ song[1] }}</a></td>
+                                <p class="card-text">Category: {{ song[2] }}</p>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p>No recommendations found for the user.</p>
+            <p>No recommendations available.</p>
         {% endif %}
     </div>
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>

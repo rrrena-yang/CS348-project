@@ -12,7 +12,7 @@ def search_results():
     print(f"Search results for query: {query}")  # Debug print
     if not query:
         return render_template('search_results.html', error="Please enter a search query.")
-    search_query = f"SELECT song.SongID, song.SingerID, song.SongName, singer.Name, song.Category FROM Song JOIN Singer singer ON song.singerID = singer.singerID WHERE SongName Like %s  "
+    search_query = f"SELECT song.SongID, song.SingerID, song.SongName, singer.Name, song.Category FROM Song Left JOIN Singer singer ON song.singerID = singer.singerID WHERE SongName Like %s  "
     conn = get_connector()
     cursor = conn.cursor()
     cursor.execute(search_query, (f"%{query}%",))

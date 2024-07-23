@@ -2,7 +2,7 @@
 CREATE TABLE User (
     ID INT PRIMARY KEY,
     UserPassword VARCHAR(40) NOT NULL,
-    UserName VARCHAR(30) NOT NULL,
+    UserName VARCHAR(30) NOT NULL UNIQUE,
     Name VARCHAR(30),
     BirthYear INT,
     Gender VARCHAR(10),

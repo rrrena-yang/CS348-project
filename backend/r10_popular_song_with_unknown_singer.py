@@ -4,7 +4,7 @@ from SQLService import get_connector
 
 r10 = Blueprint('r10', __name__)
 
-@r10.route('/api/popular_song_unknown_singer', methods=['POST'])
+@r10.route('/api/popular_song_unknown_singer', methods=['GET'])
 def popular_song_unknown_singer():
 
     query = """SELECT DISTINCT Song.SongID, Song.SongName
@@ -16,4 +16,4 @@ WHERE Song.SingerID is NULL AND
     cursor = conn.cursor()
     cursor.execute(query)
     songs = cursor.fetchall()
-    return render_template('user_recommendation.html', songs=songs)
+    return render_template('user_recommendation2.html', songs=songs)

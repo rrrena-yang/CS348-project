@@ -71,7 +71,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">{{ song.Name }}</h5>
+                            <h5 class="card-title">{{ song.SongName }}</h5>
                             <p class="card-text">Singer ID: {{ song.SingerID }}</p>
                             <p class="card-text">Category: {{ song.Category }}</p>
                             <a href="{{ url_for('song_detail', song_id=song.SongID) }}" class="btn btn-danger">View Details</a>
