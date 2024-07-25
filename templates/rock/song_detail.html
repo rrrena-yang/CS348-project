@@ -47,7 +47,7 @@
                                         <li> <a href="{{ url_for('all_songs') }}">Song</a> </li>
                                         <li> <a href="{{ url_for('all_singers') }}">Singer</a> </li>
                                         <li> <a href="{{ url_for('login') }}">Login</a> </li>
-                                        <li> <a href= "{{ url_for('user_info') }}">User</a> </li>
+                                        <li> <a href= "{{ url_for('r10.user_info') }}">User</a> </li>
                                     </ul>
                                 </nav>
                             </div>
@@ -98,7 +98,7 @@
         {% endif %}
 
         <h3 class="mt-5">Add Your Review</h3>
-        <form method="POST" action="{{ url_for('song_detail', song_id=song['SongID']) }}">
+        <form method="POST" action="{{ url_for('r11.song_detail', song_id=song['SongID']) }}">
             <div class="form-group">
                 <label for="review">Review</label>
                 <textarea class="form-control" id="review" name="review" rows="3"></textarea>

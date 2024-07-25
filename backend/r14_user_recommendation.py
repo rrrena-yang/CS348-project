@@ -2,9 +2,9 @@ from SQLService import get_connector
 from flask import *
 
 
-r7 = Blueprint('r7', __name__)
+r14 = Blueprint('r14', __name__)
 
-@r7.route('/api/<int:user_id>/rec', methods=['GET'])
+@r14.route('/api/<int:user_id>/rec', methods=['GET'])
 def user_recommendation(user_id):
     query = """
 WITH UserProfile(UserID, Category, AlbumID, SingerID, LikeCount) AS (

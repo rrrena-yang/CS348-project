@@ -2,9 +2,9 @@ from flask import *
 
 from SQLService import get_connector
 
-r10 = Blueprint('r10', __name__)
+r8 = Blueprint('r8', __name__)
 
-@r10.route('/api/popular_song_unknown_singer', methods=['GET'])
+@r8.route('/api/popular_song_unknown_singer', methods=['GET'])
 def popular_song_unknown_singer():
 
     query = """SELECT DISTINCT Song.SongID, Song.SongName
