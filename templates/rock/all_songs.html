@@ -47,7 +47,7 @@
                                         <li> <a href="{{ url_for('all_songs') }}">Song</a> </li>
                                         <li> <a href="{{ url_for('all_singers') }}">Singer</a> </li>
                                         <li> <a href="{{ url_for('login') }}">Login</a> </li>
-                                        <li> <a href= "{{ url_for('user_info') }}">User</a> </li>
+                                        <li> <a href= "{{ url_for('r10.user_info') }}">User</a> </li>
                                     </ul>
                                 </nav>
                             </div>
@@ -74,7 +74,7 @@
                             <h5 class="card-title">{{ song.SongName }}</h5>
                             <p class="card-text">Singer ID: {{ song.SingerID }}</p>
                             <p class="card-text">Category: {{ song.Category }}</p>
-                            <a href="{{ url_for('song_detail', song_id=song.SongID) }}" class="btn btn-danger">View Details</a>
+                            <a href="{{ url_for('r11.song_detail', song_id=song.SongID) }}" class="btn btn-danger">View Details</a>
                         </div>
                     </div>
                 </div>

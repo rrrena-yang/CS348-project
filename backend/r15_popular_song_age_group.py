@@ -2,9 +2,9 @@ from flask import *
 
 from SQLService import get_connector
 
-r9 = Blueprint('r9', __name__)
+r15 = Blueprint('r15', __name__)
 
-@r9.route('/api/popular_song_age_group', methods=['POST','GET'])
+@r15.route('/api/popular_song_age_group', methods=['POST','GET'])
 def popular_song_age_group():
     songs = None
     start_year = None
